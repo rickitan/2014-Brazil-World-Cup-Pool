@@ -1,0 +1,14 @@
+{
+  "name": "quinielaBackEnd",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sahat/hackathon-starter",
+  "authors": [
+    "Ricardo Macario <ricardomacario91@gmail.com>"
+  ],
+  "description": "QuinielaBackEnd",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "~1.2.15",
+    "underscore": "~1.6.0"
+  }
+}

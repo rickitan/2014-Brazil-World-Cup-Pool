@@ -19,6 +19,7 @@ var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
+var quinielaController = require('./controllers/quiniela')
 
 /**
  * API keys + Passport configuration.
@@ -140,6 +141,16 @@ app.get('/api/twitter', passportConf.isAuthenticated, passportConf.isAuthorized,
 app.get('/api/venmo', passportConf.isAuthenticated, passportConf.isAuthorized, apiController.getVenmo);
 app.post('/api/venmo', passportConf.isAuthenticated, passportConf.isAuthorized, apiController.postVenmo);
 app.get('/api/linkedin', passportConf.isAuthenticated, passportConf.isAuthorized, apiController.getLinkedin);
+
+/**
+ * Non non hackathon starter routes
+ */
+
+app.get("/quiniela", quinielaController.index);
+
+
+
+
 
 /**
  * OAuth routes for sign-in.

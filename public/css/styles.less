@@ -2,7 +2,7 @@
 @import (less) "lib/font-awesome.min.css";
 @import "lib/bootstrap/bootstrap";
 @import "lib/bootstrap-social";
-@import "themes/default";
+@import "themes/ios7";
 
 // Scaffolding
 // -------------------------
@@ -95,4 +95,71 @@ body {
   color: #fff;
   padding: 3px;
   bottom: 25px;
+}
+
+//Style for Quiniela
+//--------------------------
+
+.roundOf16Left{
+  width:90px;
+  height:100px;
+  border:1px solid grey;
+  position:absolute;
+  z-index:4;
+  background-color:white
+}
+
+.roundOf16Right{
+  width:90px;
+  height:100px;
+  border:1px solid grey;
+  position:absolute;
+  z-index:4;
+  background-color:white;
+  right:0px;
+}
+
+.quarterFinalsLeft{
+  width:200px;
+  height:150px;
+  border:1px solid grey;
+  position:absolute;
+  text-align:right;
+  background-color:white;
+  z-index:3
+}
+
+.quarterFinalsRight{
+  width:200px;
+  height:150px;
+  border:1px solid grey;
+  position:absolute;
+  text-align:right;
+  z-index:3;
+  background-color:white;
+  right:0px
+}
+
+.semiFinalsLeft{
+  top:125px;
+  width:300px;
+  height:300px;
+  border:1px solid grey;
+  position:absolute;
+  text-align:right;
+  z-index:2;
+  background-color:white;
+  left:0px;
+}
+
+.semiFinalsRight{
+  top:125px;
+  width:300px;
+  height:300px;
+  border:1px solid grey;
+  position:absolute;
+  text-align:right;
+  z-index:2;
+  background-color:white;
+  right:0px;
 }
