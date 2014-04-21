@@ -6,16 +6,7 @@ var async = require('async');
 var cheerio = require('cheerio');
 var request = require('request');
 var _ = require('underscore');
-var graph = require('fbgraph');
-var LastFmNode = require('lastfm').LastFmNode;
-var tumblr = require('tumblr.js');
-var foursquare = require('node-foursquare')({ secrets: secrets.foursquare });
-var Github = require('github-api');
 var Twit = require('twit');
-var paypal = require('paypal-rest-sdk');
-var twilio = require('twilio')(secrets.twilio.sid, secrets.twilio.token);
-var Linkedin = require('node-linkedin')(secrets.linkedin.clientID, secrets.linkedin.clientSecret, secrets.linkedin.callbackURL);
-var clockwork = require('clockwork')({key: secrets.clockwork.apiKey});
 
 /**
  * GET /api
@@ -28,40 +19,6 @@ exports.getApi = function(req, res) {
   });
 };
 
-/**
- * GET /api/foursquare
- * Foursquare API example.
- */
-
-exports.getFoursquare = function(req, res, next) {
-  var token = _.findWhere(req.user.tokens, { kind: 'foursquare' });
-  async.parallel({
-    trendingVenues: function(callback) {
-      foursquare.Venues.getTrending('40.7222756', '-74.0022724', { limit: 50 }, token.accessToken, function(err, results) {
-        callback(err, results);
-      });
-    },
-    venueDetail: function(callback) {
-      foursquare.Venues.getVenue('49da74aef964a5208b5e1fe3', token.accessToken, function(err, results) {
-        callback(err, results);
-      });
-    },
-    userCheckins: function(callback) {
-      foursquare.Users.getCheckins('self', null, token.accessToken, function(err, results) {
-        callback(err, results);
-      });
-    }
-  },
-  function(err, results) {
-    if (err) return next(err);
-    res.render('api/foursquare', {
-      title: 'Foursquare API',
-      trendingVenues: results.trendingVenues,
-      venueDetail: results.venueDetail,
-      userCheckins: results.userCheckins
-    });
-  });
-};
 
 /**
  * GET /api/tumblr
