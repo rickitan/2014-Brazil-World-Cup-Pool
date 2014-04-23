@@ -19,6 +19,7 @@ var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
 var quinielaController = require('./controllers/quiniela');
+var matchSchemaController = require('./controllers/matchSchemaController');
 
 /**
  * API keys + Passport configuration.
@@ -72,12 +73,12 @@ app.use(express.session({
     auto_reconnect: true
   })
 }));
-app.use(express.csrf());
+//app.use(express.csrf());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req, res, next) {
   res.locals.user = req.user;
-  res.locals.token = req.csrfToken();
+  //res.locals.token = req.csrfToken();
   res.locals.secrets = secrets;
   next();
 });
@@ -126,6 +127,7 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
  */
 
 app.get("/quiniela", quinielaController.index);
+app.post("/matchSchema" , matchSchemaController.save)
 
 
 

@@ -1,10 +1,20 @@
 'use strict';
-var  app = angular.module('quinielaApp', []);
+var  app = angular.module('quinielaApp');
+
+/*app.service('MatchSchema',function ($resource) {
+    return $resource("/matchSchema/:id", { id: "@id" },
+        {    update: { method: "PUT" },
+            query:  { method: "GET", isArray:false} //ffor bug in angular-resource
+        }
+    );
+});*/
 
 
-'use strict';
+app.controller('MainCtrl', function ($scope, MatchSchema) {
 
-app.controller('MainCtrl', function ($scope) {
+        $scope.saveMatchSchema = function(){
+            MatchSchema.save({groupsMatches: $scope.groupsMatches, secondStageMatches: $scope.secondStageMatches});
+        }
 
         $scope.groupsMatches = {
             A: { matches:[

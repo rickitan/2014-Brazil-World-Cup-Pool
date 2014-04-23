@@ -1,0 +1,23 @@
+var _ = require('underscore');
+var async = require('async');
+var crypto = require('crypto');
+var nodemailer = require('nodemailer');
+var passport = require('passport');
+var MatchSchema = require('../models/MatchSchema');
+var secrets = require('../config/secrets');
+
+
+exports.save = function(req, res){
+    console.log("%j", req.body.groupsMatches);
+
+    var schema = new MatchSchema({
+        user: req.user.id,
+        groupPhase: req.body.groupsMatches,
+        secondStageMatches: req.body.secondStageMatches
+    });
+    schema.markModified('groupPhase');
+    schema.save(function(err, schema){
+        if(err) res.status(404).send({error:"Error while Saving quiniela"});
+        return res.send(schema);
+    })
+}

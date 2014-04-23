@@ -1,9 +1,9 @@
 extends ../layout
 
 block content
-  form(method='POST')
+  form(method='POST', action="/login")
     legend Sign In
-    input(type='hidden', name='_csrf', value=token, action="/login")
+    input(type='hidden', name='_csrf', value=token)
     .col-sm-8.col-sm-offset-2
       if secrets.localAuth
         .form-group
@@ -13,7 +13,7 @@ block content
           label.control-label(for='password') Password
           input.form-control(type='password', name='password', id='password', placeholder='Password')
         .form-group
-          button.btn.btn-primary(type='submit')
+          button.btn.btn-primary(type='submit', value="send", id="submit")
             i.fa.fa-unlock-alt
             | Login
           a.btn.btn-link(href='/forgot') Forgot your password?
