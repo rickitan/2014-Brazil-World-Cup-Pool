@@ -26,10 +26,10 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
                 [{country: "croatia", score:0}, {country: "mexico", score:0}]
             ],
                 standing: {
-                    brazil: 0,
-                    mexico:0,
-                    cameroon:0,
-                    croatia:0
+                    brazil: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    mexico: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    cameroon:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    croatia:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
             },
             B: { matches:[
@@ -41,10 +41,10 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
                 [{country: "netherlands", score:0}, {country: "chile", score:0}]
             ],
                 standing: {
-                    spain: 0,
-                    chile:0,
-                    australia:0,
-                    netherlands:0
+                    spain: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    chile:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    australia:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    netherlands:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
             },
             C: { matches:[
@@ -56,10 +56,10 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
                 [{country: "greece", score:0}, {country: "costamarfil", score:0}]
             ],
                 standing: {
-                    colombia: 0,
-                    costamarfil:0,
-                    japan:0,
-                    greece:0
+                    colombia: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    costamarfil:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    japan:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    greece:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
             },
             D: { matches:[
@@ -71,10 +71,10 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
                 [{country: "costarica", score:0}, {country: "england", score:0}]
             ],
                 standing: {
-                    uruguay: 0,
-                    england:0,
-                    italy:0,
-                    costarica:0
+                    uruguay: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    england:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    italy:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    costarica:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
             },
             E: { matches:[
@@ -86,10 +86,10 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
                 [{country: "ecuador", score:0}, {country: "france", score:0}]
             ],
                 standing: {
-                    switzerland: 0,
-                    france:0,
-                    honduras:0,
-                    ecuador:0
+                    switzerland: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    france:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    honduras:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    ecuador:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
             },
             F: { matches:[
@@ -101,10 +101,10 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
                 [{country: "bosnia", score:0}, {country: "iran", score:0}]
             ],
                 standing: {
-                    argentina: 0,
-                    iran:0,
-                    nigeria:0,
-                    bosnia:0
+                    argentina: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    iran:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    nigeria:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    bosnia:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
             },
             G: { matches:[
@@ -116,10 +116,10 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
                 [{country: "portugal", score:0}, {country: "ghana", score:0}]
             ],
                 standing: {
-                    germany: 0,
-                    ghana:0,
-                    usa:0,
-                    portugal:0
+                    germany: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    ghana:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    usa:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    portugal:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
             },
             H: { matches:[
@@ -131,10 +131,10 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
                 [{country: "algeria", score:0}, {country: "russia", score:0}]
             ],
                 standing: {
-                    belgium: 0,
-                    russia:0,
-                    korea:0,
-                    algeria:0
+                    belgium: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    russia:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    korea:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
+                    algeria:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
             }
         };
@@ -169,13 +169,21 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
             _.each($scope.groupsMatches, function(groupData, group){
                 _.each(groupData.matches, function(match){
                     if(match[0].score > match[1].score){
-                        groupData.standing[match[0].country] += 3;
+                        groupData.standing[match[0].country].points += 3;
                     }else if(match[0].score < match[1].score){
-                        groupData.standing[match[1].country] += 3;
+                        groupData.standing[match[1].country].points += 3;
                     }else{
-                        groupData.standing[match[0].country] += 1;
-                        groupData.standing[match[1].country] += 1;
+                        groupData.standing[match[0].country].points += 1;
+                        groupData.standing[match[1].country].points += 1;
                     }
+                    //Goals in favor and against
+                    groupData.standing[match[0].country].goalsInFavor += match[0].score;
+                    groupData.standing[match[0].country].goalsAgainst += match[1].score;
+                    groupData.standing[match[1].country].goalsInFavor += match[1].score;
+                    groupData.standing[match[1].country].goalsAgainst += match[0].score;
+                    //Goal Difference
+                    groupData.standing[match[0].country].goalDifference += match[0].score - match[1].score;
+                    groupData.standing[match[1].country].goalDifference += match[1].score - match[0].score;
                 })
             })
             countriesThatPass();
@@ -184,17 +192,80 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
         function clearPoints(){
             _.each($scope.groupsMatches, function(groupData, group){
                 _.each(groupData.matches, function(match){
-                    groupData.standing[match[0].country] = 0;
-                    groupData.standing[match[1].country] = 0;
+                    groupData.standing[match[0].country].points = 0;
+                    groupData.standing[match[1].country].points = 0;
+                    //Goal in favor and against
+                    groupData.standing[match[0].country].goalsInFavor = 0;
+                    groupData.standing[match[0].country].goalsAgainst = 0;
+                    groupData.standing[match[1].country].goalsInFavor = 0;
+                    groupData.standing[match[1].country].goalsAgainst = 0;
+                    //Goal Diff
+                    groupData.standing[match[0].country].goalDifference = 0;
+                    groupData.standing[match[1].country].goalDifference = 0;
                 })
             })
         }
 
+        function tieBreaker(countryPairs, orderBy){ //orderBy can be points goalDifference goalsInFavor goalsAgainst
+            var countriesOrdered = _.chain(countryPairs).sortBy(function(pair){return pair[1][orderBy]}).reverse().value();
+            var nextOrderBy = 'couldnt break the tie';
+            switch (orderBy){
+                case 'points':
+                    nextOrderBy = "goalDifference";
+                    break;
+                case 'goalDifference':
+                    nextOrderBy = "goalsInFavor"
+                    break;
+                default:
+                    //alert("Demasiada rebuscada tu opción, añade goles!");
+                    //TO DO: More Validations; 
+                    return null;
+                    break;
+            }
+
+            console.log("countries ordered", countriesOrdered);
+            if(countriesOrdered.length > 2){
+                if( (countriesOrdered[0][1][orderBy] > countriesOrdered[1][1][orderBy]) && (countriesOrdered[1][1][orderBy] > countriesOrdered[2][1][orderBy]) ){
+                    //pasa primero y segundo *
+                    return [countriesOrdered[0][0], countriesOrdered[1][0]];
+                }else if((countriesOrdered[0][1][orderBy] == countriesOrdered[1][1][orderBy]) && (countriesOrdered[1][1][orderBy] > countriesOrdered[2][1][orderBy])){
+                    //primero y segundo empatados *
+                    return tieBreaker([countriesOrdered[0], countriesOrdered[1]], nextOrderBy)
+                }else if( (countriesOrdered[0][1][orderBy] > countriesOrdered[1][1][orderBy]) && (countriesOrdered[1][1][orderBy] == countriesOrdered[2][1][orderBy]) && (countriesOrdered[2][1][orderBy] > countriesOrdered[3][1][orderBy])){
+                    //pasa primer, segundo y tercero empatados *
+                    return _.flatten([countriesOrdered[0][0], tieBreaker([countriesOrdered[1], countriesOrdered[2]], nextOrderBy)]);
+                }else if( (countriesOrdered[0][1][orderBy] == countriesOrdered[1][1][orderBy] == countriesOrdered[2][1][orderBy]) && (countriesOrdered[2][1][orderBy] > countriesOrdered[3][1][orderBy]) ){
+                    //Primero segundo y tercero empatados
+                    return tieBreaker([countriesOrdered[0], countriesOrdered[1], countriesOrdered[2]], nextOrderBy)
+                }else if(countriesOrdered[0][1][orderBy] == countriesOrdered[1][1][orderBy] == countriesOrdered[2][1][orderBy] == countriesOrdered[3][1][orderBy]){
+                    //Todos empatados
+                    return tieBreaker(countriesOrdered, nextOrderBy)
+                }
+            }else if(countriesOrdered.length == 2){
+                if( (countriesOrdered[0][1][orderBy] > countriesOrdered[1][1][orderBy]) ){
+                    return [countriesOrdered[0][0], countriesOrdered[1][0]]
+                }else if( (countriesOrdered[0][1][orderBy] < countriesOrdered[1][1][orderBy]) ){
+                    return [countriesOrdered[1][0], countriesOrdered[0][0]]
+                }else{
+                    return tieBreaker(countriesOrdered, nextOrderBy)
+                }
+            }
+        }
+
+
         function countriesThatPass(){
             _.each($scope.groupsMatches, function(groupData, group){
-                var countriesOrderedByPoints = _.sortBy(_.pairs(groupData.standing), function(pair){ return -pair[1]});
-                $scope.standing[group][0]["country"] = countriesOrderedByPoints[0][0];
-                $scope.standing[group][1]["country"] = countriesOrderedByPoints[1][0];
+
+                var passingCountries = tieBreaker(_.pairs(groupData.standing), "points");
+
+                console.log("passing countries", passingCountries);
+
+                if(passingCountries){
+                    $scope.standing[group][0]["country"] = passingCountries[0];
+                    $scope.standing[group][1]["country"] = passingCountries[1];
+                }
+
+
             })
             $scope.secondStageMatches.roundOf16.A = [_.clone($scope.standing.A[0]), _.clone($scope.standing.B[1])];
             $scope.secondStageMatches.roundOf16.B = [_.clone($scope.standing.C[0]), _.clone($scope.standing.D[1])];
@@ -221,7 +292,6 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
             var matchHolder = [];
             var concaTitle = "";
             _.each($scope.secondStageMatches.roundOf16, function(match, title){
-                console.log(match);
                 if(match[0].score === "" && match[1].score === ""){
                     matchHolder.push({country: null});
                 }
