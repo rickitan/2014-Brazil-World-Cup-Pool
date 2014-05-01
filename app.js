@@ -56,7 +56,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(connectAssets({
   paths: ['public/css', 'public/js'],
-  helperContext: app.locals
+  helperContext: app.locals,
+  build: false
 }));
 app.use(express.compress());
 app.use(express.favicon());

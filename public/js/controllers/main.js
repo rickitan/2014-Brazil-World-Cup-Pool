@@ -12,6 +12,8 @@ var  app = angular.module('quinielaApp');
 
 app.controller('MainCtrl', function ($scope, MatchSchema) {
 
+        $scope.groupsLayout = [['A','B','C'],['D','E'],['F','G','H']]; //For iterating and adding table in the middle with standing
+
         $scope.saveMatchSchema = function(){
             MatchSchema.save({groupsMatches: $scope.groupsMatches, secondStageMatches: $scope.secondStageMatches});
         }
@@ -139,6 +141,7 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
             }
         };
 
+
         $scope.$watch("groupsMatches.A.matches ", function(newVal){
             calculateStandings();
         }, true);
@@ -218,7 +221,7 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
                     break;
                 default:
                     //alert("Demasiada rebuscada tu opción, añade goles!");
-                    //TO DO: More Validations; 
+                    //TO DO: More Validations;
                     return null;
                     break;
             }
@@ -263,6 +266,9 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
                 if(passingCountries){
                     $scope.standing[group][0]["country"] = passingCountries[0];
                     $scope.standing[group][1]["country"] = passingCountries[1];
+                }else{
+                    $scope.standing[group][0]["country"] = "";
+                    $scope.standing[group][1]["country"] = "";
                 }
 
 
@@ -287,6 +293,7 @@ app.controller('MainCtrl', function ($scope, MatchSchema) {
             G: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
             H: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}]
         };
+
 
         $scope.$watch("secondStageMatches.roundOf16", function(newVal){ //Calculate who passes to quarter finals
             var matchHolder = [];

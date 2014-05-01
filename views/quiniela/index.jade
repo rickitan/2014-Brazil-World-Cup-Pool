@@ -3,29 +3,48 @@ block content
     div(ng-controller="MainCtrl")
         h1 Quiniela
 
-        .row
-            .col-sm-4(ng-repeat='(group, groupData) in groupsMatches')
-                h1(style='text-align: center') Grupo {{group}}
-                div(ng-repeat='match in groupData.matches', style='display: inline-block; padding: 5px; width: 154px; height: 53px; margin-left: {{$index%2 * 23}}px; border-left: {{$index%2}}px solid #cdd0d4;')
-                    input(type='number', style='width:20px; height:21px; position: absolute; margin-left: 5px; margin-top: 2px', ng-model='match[0].score')
-                    span(style='display: inline; margin-left: 25px')
-                        img(ng-src='/img/country_flags/{{match[0].country}}.png', width='50', height='43')
-                        | vs
-                        img(ng-src='/img/country_flags/{{match[1].country}}.png', width='50', height='43')
-                    input(type='number', style='width:20px; height:21px; position: absolute; margin-top: 2px', ng-model='match[1].score')
+        div.row(ng-repeat="agrupation in groupsLayout")
+            div(ng-repeat='group in agrupation')
+                .col-sm-4(style="padding-top:{{agrupation.length == 2 ? 15 : 0}}px")
+                    h1(style='text-align: center') Grupo {{group}}
+                    div(ng-repeat='match in groupsMatches[group].matches', style='display: inline-block; padding: 5px; width: 154px; height: 53px; margin-left: {{ $index%2 * 23 }}px; border-left: {{$index%2}}px solid #cdd0d4; ')
+                        input(type='number', style='width:20px; height:21px; position: absolute; margin-left: 5px; margin-top: 2px', ng-model='match[0].score')
+                        span(style='display: inline; margin-left: 25px')
+                            img(ng-src='/img/country_flags/{{match[0].country}}.png', width='50', height='43')
+                            | vs
+                            img(ng-src='/img/country_flags/{{match[1].country}}.png', width='50', height='43')
+                        input(type='number', style='width:20px; height:21px; position: absolute; margin-top: 2px', ng-model='match[1].score')
+                //Tabla de posiciones
+                .col-sm-4(ng-if="agrupation.length ==2 && $index==0", style="height:259px")
+                    table.table.table-bordered.table-hover.table-condensed
+                        thead
+                            tr(style="line-height: 25px;min-height: 25px;height: 25px;")
+                                th Grupo
+                                th Primero
+                                th Segundo
+                        tbody
+                            tr(ng-repeat="(group, standing) in standing", style="line-height: 25px;min-height: 25px;height: 25px;")
+                                td {{group}}
+                                td
+                                    img(ng-src='/img/country_flags/{{standing[0].country}}.png', width='auto', height='18', ng-show="standing[0].country")
+                                    | {{standing[0].country}}
+                                td
+                                    img(ng-src='/img/country_flags/{{standing[1].country}}.png', width='auto', height='18', ng-show="standing[1].country")
+                                    | {{standing[1].country}}
+
         // SECOND PHASE
         div(style='position: relative; margin-top:20px; height: 560px')
             div(ng-repeat='(title, match) in secondStageMatches.roundOf16', ng-class='($index < 4) ? "roundOf16Left" : "roundOf16Right"', style='top:{{($index < 4) ? 150 * $index : 150*($index - 4)}}px')
                 .matchRow
-                    input.inputScore(type='text', ng-model='match[0].score')
-                    img(ng-src='/img/country_flags/{{match[0].country}}.png', width='50', height='43')
+                    input.inputScore(type='text', ng-model='match[0].score', ng-show='match[0].country')
+                    img(ng-src='/img/country_flags/{{match[0].country}}.png', width='50', height='43', ng-show='match[0].country')
                     .radioContainer
                         input(ng-show='(match[0].score == match[1].score) && (match[0].score !== "" && match[1].score !== "")', type='radio', ng-checked='true', name='{{title}}', ng-click='victorByPenalties("roundOf16", title, 0)')
                 .vsDiv
                     span vs
                 .matchRow
-                    input.inputScore(type='text', ng-model='match[1].score')
-                    img(ng-src='/img/country_flags/{{match[1].country}}.png', width='50', height='43')
+                    input.inputScore(type='text', ng-model='match[1].score', ng-show='match[1].country')
+                    img(ng-src='/img/country_flags/{{match[1].country}}.png', width='50', height='43', ng-show='match[1].country')
                     .radioContainer
                         input(ng-show='(match[0].score == match[1].score) && (match[0].score !== "" && match[1].score !== "")', type='radio', name='{{title}}', ng-click='victorByPenalties("roundOf16", title, 1)')
             div(ng-repeat='(title, match) in secondStageMatches.quarterFinals', ng-class='($index < 2) ? "quarterFinalsLeft" : "quarterFinalsRight"', style='top:{{($index < 2) ? 50 + $index*300 : 50 + (($index-2) * 300)}}px;')
@@ -64,10 +83,7 @@ block content
                         input(ng-show='(secondStageMatches.final.ABCDEFGH[0].score == secondStageMatches.final.ABCDEFGH[1].score) && (secondStageMatches.final.ABCDEFGH[0].score != "" && secondStageMatches.final.ABCDEFGH[1].score != ""  )', type='radio', name='final', ng-click='victorByPenalties("final", "ABCDEFGH", 1)')
                     img(ng-src='/img/country_flags/{{secondStageMatches.final.ABCDEFGH[1].country}}.png', width='50', height='43', style=' margin-left:11px; margin-top:10px')
                     input(type='text', style='width:20px; height:21px; position: absolute; margin-left: -3px; margin-top: 13px', ng-model='secondStageMatches.final.ABCDEFGH[1].score')
-        .row
-            button(ng-click="saveMatchSchema()") Save Schema
+        .row(style='text-align: right')
+            button.btn.btn-warning(ng-click="saveMatchSchema()") Guardar
 
-        .footer
-            p(style='text-align: right')
-                | Made by
-                a(href='https://twitter.com/ricardomacario') @ricardomacario
+
