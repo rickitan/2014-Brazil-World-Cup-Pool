@@ -154,7 +154,6 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedi
 });
 
 
-mongoose
 /**
  * Start Express server.
  */

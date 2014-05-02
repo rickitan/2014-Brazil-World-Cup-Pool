@@ -1,5 +1,5 @@
 module.exports = {
-  db: process.env.MONGODB|| 'mongodb://localhost:27017/test',
+  db: process.env.MONGODB|| 'mongodb://rickitan:quiniela@dbh83.mongolab.com:27837/quiniela', //'mongodb://localhost:27017/test',
 
   sessionSecret: process.env.SESSION_SECRET || 'Your Session Secret goes here',
 
@@ -18,14 +18,14 @@ module.exports = {
 
   facebookAuth: true,
   facebook: {
-    clientID: process.env.FACEBOOK_ID || 'Your App ID',
-    clientSecret: process.env.FACEBOOK_SECRET || 'Your App Secret',
+    clientID: process.env.FACEBOOK_ID || '765874370098491',
+    clientSecret: process.env.FACEBOOK_SECRET || '3aceb191612ac97a9a7798d4853e45ee',
     callbackURL: '/auth/facebook/callback',
     passReqToCallback: true
   },
 
 
-  twitterAuth: true,
+  twitterAuth: false,
   twitter: {
     consumerKey: process.env.TWITTER_KEY || 'Your Consumer Key',
     consumerSecret: process.env.TWITTER_SECRET  || 'Your Consumer Secret',
@@ -33,7 +33,7 @@ module.exports = {
     passReqToCallback: true
   },
 
-  googleAuth: true,
+  googleAuth: false,
   google: {
     clientID: process.env.GOOGLE_ID || 'Your Client ID',
     clientSecret: process.env.GOOGLE_SECRET || 'Your Client Secret',

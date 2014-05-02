@@ -11,7 +11,7 @@ var  app = angular.module('quinielaApp');
 
 
 app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchema) {
-
+        $scope.user = window.user;
         if(window.user){
             MatchSchema.get({id: window.user.id}, function(schema){
                 if(schema.groupPhase && schema.secondStageMatches){
