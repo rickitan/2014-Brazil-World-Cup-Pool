@@ -43,8 +43,8 @@ exports.postLogin = function(req, res, next) {
     }
     req.logIn(user, function(err) {
       if (err) return next(err);
-      req.flash('success', { msg: 'Success! You are logged in.' });
-      res.redirect(req.session.returnTo || '/');
+      //req.flash('success', { msg: 'Success! You are logged in.' })
+      res.redirect('/quiniela');
     });
   })(req, res, next);
 };
@@ -104,7 +104,8 @@ exports.postSignup = function(req, res, next) {
     }
     req.logIn(user, function(err) {
       if (err) return next(err);
-      res.redirect('/');
+      console.log("login");
+      res.redirect('/quiniela');
     });
   });
 };

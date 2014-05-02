@@ -5,19 +5,37 @@ var nodemailer = require('nodemailer');
 var passport = require('passport');
 var MatchSchema = require('../models/MatchSchema');
 var secrets = require('../config/secrets');
+var ObjectId = require('mongoose').Types.ObjectId;
+
 
 
 exports.save = function(req, res){
-    console.log("%j", req.body.groupsMatches);
+    var objId = new ObjectId(req.params.user_id);
+    console.log(objId);
 
-    var schema = new MatchSchema({
-        user: req.user.id,
-        groupPhase: req.body.groupsMatches,
-        secondStageMatches: req.body.secondStageMatches
+    MatchSchema.findOne({user: objId}, function(err, schemaToDelete){
+        if(schemaToDelete) schemaToDelete.remove();
+        var schema = new MatchSchema({
+            user: req.user.id,
+            groupPhase: req.body.groupsMatches,
+            secondStageMatches: req.body.secondStageMatches
+        });
+        schema.markModified('groupPhase');
+        schema.markModified('secondStageMatches');
+        schema.save(function(err, schema){
+            if(err) res.status(404).send({error:"Error while Saving quiniela"});
+            return res.send(schema);
+        })
     });
-    schema.markModified('groupPhase');
-    schema.save(function(err, schema){
-        if(err) res.status(404).send({error:"Error while Saving quiniela"});
+
+
+}
+
+
+exports.userMatchSchema = function(req, res){
+    var objId = new ObjectId(req.params.user_id);
+    MatchSchema.findOne({user: objId}, function(err, schema){
+        if(err) res.status(404).send("Fallo");
         return res.send(schema);
-    })
+    });
 }

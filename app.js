@@ -128,7 +128,9 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
  */
 
 app.get("/quiniela", quinielaController.index);
-app.post("/matchSchema" , matchSchemaController.save)
+
+app.get("/user/:user_id/matchSchema", matchSchemaController.userMatchSchema);
+app.post("/user/:user_id/matchSchema" , matchSchemaController.save)
 
 
 
