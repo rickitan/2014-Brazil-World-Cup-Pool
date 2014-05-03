@@ -11,8 +11,8 @@
 
 //= require lib/jquery-2.1.0.min
 //= require lib/bootstrap.min
-//= require lib/angular/angular.min
-//= require lib/angular-resource/angular-resource.min
+//= require lib/angular/angular
+//= require lib/angular-resource/angular-resource
 //= require angularHelpers/services
 //= require lib/underscore/underscore
 //= require controllers/main
