@@ -27,7 +27,7 @@ app.factory('CleanGroupSchema', function(){
                     croatia:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
             },
-            B: { matches:[
+            /*B: { matches:[
                 [{country: "spain", score:0}, {country: "netherlands", score:0}],
                 [{country: "chile", score:0}, {country: "australia", score:0}],
                 [{country: "spain", score:0}, {country: "chile", score:0}],
@@ -131,7 +131,7 @@ app.factory('CleanGroupSchema', function(){
                     korea:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
                     algeria:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
-            }
+            }*/
         },
         secondStageMatches: {
             "roundOf16":{
