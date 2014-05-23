@@ -9,16 +9,25 @@ app.factory('MatchSchema',function ($resource) {
     );
 });
 
+app.factory('Rankings',function ($resource) {
+  return $resource("/userRankings", {},
+    {    update: { method: "PUT" },
+      query:  { method: "GET", isArray:true} //ffor bug in angular-resource
+    }
+  );
+});
+
+
 app.factory('CleanGroupSchema', function(){
     return {
         groupsMatches : {
             A: { matches:[
-                [{country: "brazil", score:0}, {country: "croatia", score:0}],
-                [{country: "mexico", score:0}, {country: "cameroon", score:0}],
-                [{country: "brazil", score:0}, {country: "mexico", score:0}],
-                [{country: "cameroon", score:0}, {country: "croatia", score:0}],
-                [{country: "cameroon", score:0}, {country: "brazil", score:0}],
-                [{country: "croatia", score:0}, {country: "mexico", score:0}]
+                [{country: "brazil", score:null}, {country: "croatia", score:null}],
+                [{country: "mexico", score:null}, {country: "cameroon", score:null}],
+                [{country: "brazil", score:null}, {country: "mexico", score:null}],
+                [{country: "cameroon", score:null}, {country: "croatia", score:null}],
+                [{country: "cameroon", score:null}, {country: "brazil", score:null}],
+                [{country: "croatia", score:null}, {country: "mexico", score:null}]
             ],
                 standing: {
                     brazil: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
@@ -27,13 +36,13 @@ app.factory('CleanGroupSchema', function(){
                     croatia:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
             },
-            /*B: { matches:[
-                [{country: "spain", score:0}, {country: "netherlands", score:0}],
-                [{country: "chile", score:0}, {country: "australia", score:0}],
-                [{country: "spain", score:0}, {country: "chile", score:0}],
-                [{country: "australia", score:0}, {country: "netherlands", score:0}],
-                [{country: "australia", score:0}, {country: "spain", score:0}],
-                [{country: "netherlands", score:0}, {country: "chile", score:0}]
+            B: { matches:[
+                [{country: "spain", score:null}, {country: "netherlands", score:null}],
+                [{country: "chile", score:null}, {country: "australia", score:null}],
+                [{country: "spain", score:null}, {country: "chile", score:null}],
+                [{country: "australia", score:null}, {country: "netherlands", score:null}],
+                [{country: "australia", score:null}, {country: "spain", score:null}],
+                [{country: "netherlands", score:null}, {country: "chile", score:null}]
             ],
                 standing: {
                     spain: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
@@ -43,12 +52,12 @@ app.factory('CleanGroupSchema', function(){
                 }
             },
             C: { matches:[
-                [{country: "colombia", score:0}, {country: "greece", score:0}],
-                [{country: "costamarfil", score:0}, {country: "japan", score:0}],
-                [{country: "colombia", score:0}, {country: "costamarfil", score:0}],
-                [{country: "japan", score:0}, {country: "greece", score:0}],
-                [{country: "japan", score:0}, {country: "colombia", score:0}],
-                [{country: "greece", score:0}, {country: "costamarfil", score:0}]
+                [{country: "colombia", score:null}, {country: "greece", score:null}],
+                [{country: "costamarfil", score:null}, {country: "japan", score:null}],
+                [{country: "colombia", score:null}, {country: "costamarfil", score:null}],
+                [{country: "japan", score:null}, {country: "greece", score:null}],
+                [{country: "japan", score:null}, {country: "colombia", score:null}],
+                [{country: "greece", score:null}, {country: "costamarfil", score:null}]
             ],
                 standing: {
                     colombia: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
@@ -58,12 +67,12 @@ app.factory('CleanGroupSchema', function(){
                 }
             },
             D: { matches:[
-                [{country: "uruguay", score:0}, {country: "costarica", score:0}],
-                [{country: "england", score:0}, {country: "italy", score:0}],
-                [{country: "uruguay", score:0}, {country: "england", score:0}],
-                [{country: "italy", score:0}, {country: "costarica", score:0}],
-                [{country: "italy", score:0}, {country: "uruguay", score:0}],
-                [{country: "costarica", score:0}, {country: "england", score:0}]
+                [{country: "uruguay", score:null}, {country: "costarica", score:null}],
+                [{country: "england", score:null}, {country: "italy", score:null}],
+                [{country: "uruguay", score:null}, {country: "england", score:null}],
+                [{country: "italy", score:null}, {country: "costarica", score:null}],
+                [{country: "italy", score:null}, {country: "uruguay", score:null}],
+                [{country: "costarica", score:null}, {country: "england", score:null}]
             ],
                 standing: {
                     uruguay: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
@@ -73,12 +82,12 @@ app.factory('CleanGroupSchema', function(){
                 }
             },
             E: { matches:[
-                [{country: "switzerland", score:0}, {country: "ecuador", score:0}],
-                [{country: "france", score:0}, {country: "honduras", score:0}],
-                [{country: "switzerland", score:0}, {country: "france", score:0}],
-                [{country: "honduras", score:0}, {country: "ecuador", score:0}],
-                [{country: "honduras", score:0}, {country: "switzerland", score:0}],
-                [{country: "ecuador", score:0}, {country: "france", score:0}]
+                [{country: "switzerland", score:null}, {country: "ecuador", score:null}],
+                [{country: "france", score:null}, {country: "honduras", score:null}],
+                [{country: "switzerland", score:null}, {country: "france", score:null}],
+                [{country: "honduras", score:null}, {country: "ecuador", score:null}],
+                [{country: "honduras", score:null}, {country: "switzerland", score:null}],
+                [{country: "ecuador", score:null}, {country: "france", score:null}]
             ],
                 standing: {
                     switzerland: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
@@ -88,12 +97,12 @@ app.factory('CleanGroupSchema', function(){
                 }
             },
             F: { matches:[
-                [{country: "argentina", score:0}, {country: "bosnia", score:0}],
-                [{country: "iran", score:0}, {country: "nigeria", score:0}],
-                [{country: "argentina", score:0}, {country: "iran", score:0}],
-                [{country: "nigeria", score:0}, {country: "bosnia", score:0}],
-                [{country: "nigeria", score:0}, {country: "argentina", score:0}],
-                [{country: "bosnia", score:0}, {country: "iran", score:0}]
+                [{country: "argentina", score:null}, {country: "bosnia", score:null}],
+                [{country: "iran", score:null}, {country: "nigeria", score:null}],
+                [{country: "argentina", score:null}, {country: "iran", score:null}],
+                [{country: "nigeria", score:null}, {country: "bosnia", score:null}],
+                [{country: "nigeria", score:null}, {country: "argentina", score:null}],
+                [{country: "bosnia", score:null}, {country: "iran", score:null}]
             ],
                 standing: {
                     argentina: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
@@ -103,12 +112,12 @@ app.factory('CleanGroupSchema', function(){
                 }
             },
             G: { matches:[
-                [{country: "germany", score:0}, {country: "portugal", score:0}],
-                [{country: "ghana", score:0}, {country: "usa", score:0}],
-                [{country: "germany", score:0}, {country: "ghana", score:0}],
-                [{country: "usa", score:0}, {country: "portugal", score:0}],
-                [{country: "usa", score:0}, {country: "germany", score:0}],
-                [{country: "portugal", score:0}, {country: "ghana", score:0}]
+                [{country: "germany", score:null}, {country: "portugal", score:null}],
+                [{country: "ghana", score:null}, {country: "usa", score:null}],
+                [{country: "germany", score:null}, {country: "ghana", score:null}],
+                [{country: "usa", score:null}, {country: "portugal", score:null}],
+                [{country: "usa", score:null}, {country: "germany", score:null}],
+                [{country: "portugal", score:null}, {country: "ghana", score:null}]
             ],
                 standing: {
                     germany: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
@@ -118,12 +127,12 @@ app.factory('CleanGroupSchema', function(){
                 }
             },
             H: { matches:[
-                [{country: "belgium", score:0}, {country: "algeria", score:0}],
-                [{country: "russia", score:0}, {country: "korea", score:0}],
-                [{country: "belgium", score:0}, {country: "russia", score:0}],
-                [{country: "korea", score:0}, {country: "algeria", score:0}],
-                [{country: "korea", score:0}, {country: "belgium", score:0}],
-                [{country: "algeria", score:0}, {country: "russia", score:0}]
+                [{country: "belgium", score:null}, {country: "algeria", score:null}],
+                [{country: "russia", score:null}, {country: "korea", score:null}],
+                [{country: "belgium", score:null}, {country: "russia", score:null}],
+                [{country: "korea", score:null}, {country: "algeria", score:null}],
+                [{country: "korea", score:null}, {country: "belgium", score:null}],
+                [{country: "algeria", score:null}, {country: "russia", score:null}]
             ],
                 standing: {
                     belgium: {points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
@@ -131,7 +140,7 @@ app.factory('CleanGroupSchema', function(){
                     korea:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 },
                     algeria:{points:0, goalsInFavor:0, goalsAgainst:0, goalDifference:0 }
                 }
-            }*/
+            }
         },
         secondStageMatches: {
             "roundOf16":{
@@ -153,6 +162,9 @@ app.factory('CleanGroupSchema', function(){
             "semiFinals":{
                 ABCD: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
                 EFGH: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}]
+            },
+            "thirdFourth":{
+              ABCDEFGH: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}]
             },
             "final":{
                 ABCDEFGH: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}]

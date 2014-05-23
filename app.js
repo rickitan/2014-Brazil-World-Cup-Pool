@@ -128,10 +128,15 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
  */
 
 app.get("/quiniela", quinielaController.index);
+app.get("/rankings", quinielaController.rankings);
+app.get("/userRankings", quinielaController.userRankings);
+
+
 
 app.get("/user/:user_id/matchSchema", matchSchemaController.userMatchSchema);
 app.post("/user/:user_id/matchSchema" , matchSchemaController.save)
 
+app.get("/calculateRankings", matchSchemaController.calculateRanking);
 
 
 

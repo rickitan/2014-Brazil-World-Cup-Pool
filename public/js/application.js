@@ -16,4 +16,5 @@
 //= require angularHelpers/services
 //= require lib/underscore/underscore
 //= require controllers/main
+//= require controllers/rankingsController
 

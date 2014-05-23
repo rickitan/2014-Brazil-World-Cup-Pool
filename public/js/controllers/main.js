@@ -12,6 +12,8 @@ var  app = angular.module('quinielaApp');
 
 app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchema, $filter) {
         $scope.user = window.user;
+        $scope.groupsMatches = CleanGroupSchema.groupsMatches;
+        $scope.secondStageMatches = CleanGroupSchema.secondStageMatches;
         if(window.user){
             MatchSchema.get({id: window.user.id}, function(schema){
                 if(schema.groupPhase && schema.secondStageMatches){
@@ -19,15 +21,14 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
                     $scope.secondStageMatches = schema.secondStageMatches
                 }
             });
-        }else{
-          $scope.groupsMatches = CleanGroupSchema.groupsMatches;
-          $scope.secondStageMatches = CleanGroupSchema.secondStageMatches;
         }
 
         $scope.groupsLayout = [['A','B','C'],['D','E'],['F','G','H']]; //For iterating and adding table in the middle with standing
 
         $scope.saveMatchSchema = function(){
-            MatchSchema.save({id:window.user.id, groupsMatches: $scope.groupsMatches, secondStageMatches: $scope.secondStageMatches});
+            MatchSchema.save({id:window.user.id, groupsMatches: $scope.groupsMatches, secondStageMatches: $scope.secondStageMatches}, function(){
+              alert("Your pool have been saved!");
+            });
         }
 
         $scope.$watch("groupsMatches.A.matches ", function(newVal){
@@ -97,17 +98,101 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
             })
         }
 
-        /*
-           [{country: "brazil", score:0}, {country: "croatia", score:0}],
-           [{country: "mexico", score:0}, {country: "cameroon", score:0}],
-           [{country: "brazil", score:0}, {country: "mexico", score:0}],
-           [{country: "cameroon", score:0}, {country: "croatia", score:0}],
-           [{country: "cameroon", score:0}, {country: "brazil", score:0}],
-           [{country: "croatia", score:0}, {country: "mexico", score:0}]
-        */
+
+        function countriesThatPass(){
+          _.each($scope.groupsMatches, function(groupData, group){
+
+            var orderBy = ["points", "goalDifference", "goalsInFavor"];
+            var standingHolder = _.pairs(groupData.standing);
+            var passingCountries = [];
+
+            for(var i=0;i<orderBy.length;i++){
+              var tiebreaked = tieBreaker(standingHolder, orderBy[i], group); //0 => passing; 1=> tied
+              passingCountries.push.apply(passingCountries, tiebreaked[0]);
+              standingHolder = tiebreaked[1];
+              if(passingCountries >= 2) break;
+            }
+
+            /*if(passingCountries <= 1){
+              for(var i=0;i<orderBy.length;i++){
+                var tiebreaked = deepTieBreaker(standingHolder, orderBy[i], group); //0 => passing; 1=> tied
+                passingCountries.push.apply(passingCountries, tiebreaked[0]);
+                standingHolder = tiebreaked[1];
+                if(passingCountries >= 2) break;
+              }
+            }*/
+
+
+
+            if(passingCountries){
+              $scope.standing[group][0]["country"] = passingCountries[0] ? passingCountries[0][0] : null;
+              $scope.standing[group][1]["country"] = passingCountries[1] ? passingCountries[1][0] : null;
+            }else{
+              $scope.standing[group][0]["country"] = "";
+              $scope.standing[group][1]["country"] = "";
+            }
+
+
+          })
+          $scope.secondStageMatches.roundOf16.A[0].country = $scope.standing.A[0].country;
+          $scope.secondStageMatches.roundOf16.A[1].country = $scope.standing.B[1].country;
+
+          $scope.secondStageMatches.roundOf16.B[0].country  = $scope.standing.C[0].country
+          $scope.secondStageMatches.roundOf16.B[1].country = $scope.standing.D[1].country;
+
+          $scope.secondStageMatches.roundOf16.C[0].country  = $scope.standing.E[0].country;
+          $scope.secondStageMatches.roundOf16.C[1].country = $scope.standing.F[1].country;
+
+          $scope.secondStageMatches.roundOf16.D[0].country  = $scope.standing.G[0].country;
+          $scope.secondStageMatches.roundOf16.D[1].country = $scope.standing.H[1].country;
+
+          $scope.secondStageMatches.roundOf16.E[0].country  = $scope.standing.B[0].country;
+          $scope.secondStageMatches.roundOf16.E[1].country = $scope.standing.A[1].country;
+
+          $scope.secondStageMatches.roundOf16.F[0].country  = $scope.standing.D[0].country;
+          $scope.secondStageMatches.roundOf16.F[1].country = $scope.standing.C[1].country;
+
+          $scope.secondStageMatches.roundOf16.G[0].country  = $scope.standing.F[0].country;
+          $scope.secondStageMatches.roundOf16.G[1].country = $scope.standing.E[1].country;
+
+          $scope.secondStageMatches.roundOf16.H[0].country  = $scope.standing.H[0].country;
+          $scope.secondStageMatches.roundOf16.H[1].country = $scope.standing.G[1].country;
+
+        }
+
+        function tieBreaker(countryPairs, orderBy, group){
+          var countriesOrdered = _.chain(countryPairs).sortBy(function(pair){return pair[1][orderBy]}).reverse().value();
+          return passingTied(countriesOrdered, orderBy);
+        }
+
+        function passingTied(countriesOrdered, orderBy){
+          var passingCountries = []; //null null null null
+          var tiedCountries = [];
+          //console.log("Countries ORDERED", countriesOrdered);
+          //countriesOrdered[i][1][orderBy]
+          while(countriesOrdered.length > 0){
+            //if(countriesOrdered.length == 1){ passingCountries.push(countriesOrdered[0]); break; }
+
+            if((countriesOrdered.length > 1) && (countriesOrdered[0][1][orderBy] > countriesOrdered[1][1][orderBy])){ //First one passes
+              passingCountries.push(countriesOrdered.shift())
+            }else if((countriesOrdered.length == 1) && (tiedCountries == 0)){
+              passingCountries.push(countriesOrdered.shift()) //Last element and no one tied
+            }else if(countriesOrdered.length > 1 && (countriesOrdered[0][1][orderBy] == countriesOrdered[1][1][orderBy])){ //Tie
+              var tied = false;
+              while(countriesOrdered.length > 1 && (countriesOrdered[0][1][orderBy] == countriesOrdered[1][1][orderBy]) ){
+                tied = true;
+                tiedCountries.push(_.flatten(countriesOrdered.splice(1,1)));
+              }
+              tiedCountries.push(countriesOrdered.shift());
+            }
+            if(tiedCountries.length > 0 || passingCountries.length == 2) break;
+          }
+          return [passingCountries, tiedCountries];
+        }
+
 
         function deepTieBreaker(countryPairs, orderBy, group){
-          console.log("Country Pairs Deep Tie Break", countryPairs);
+          //console.log("Country Pairs Deep Tie Break", countryPairs);
           _.each(countryPairs, function(pair){pair[1].points = 0; pair[1].goalsInFavor = 0; pair[1].goalsAgainst = 0;  pair[1].goalDifference = 0 });
           var groupMatches = $scope.groupsMatches[group].matches;
           var selectedMatches = [];
@@ -124,7 +209,8 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
             }
           });
           countryPairs = calculateStandingTieBreaker(countryPairs, selectedMatches);
-          return _.chain(countryPairs).sortBy(function(pair){return pair[1][orderBy]}).reverse().value();
+          var countriesOrdered = _.chain(countryPairs).sortBy(function(pair){return pair[1][orderBy]}).reverse().value();
+          return passingTied(countriesOrdered, orderBy);
         }
 
         function calculateStandingTieBreaker(countryPairs, selectedMatches){
@@ -151,83 +237,10 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
         }
 
 
-        function tieBreaker(countryPairs, orderBy, group){
-          var countriesOrdered = _.chain(countryPairs).sortBy(function(pair){return pair[1][orderBy]}).reverse().value();
-          var nextOrderBy = "";
-          switch (orderBy){
-            case 'points':
-              nextOrderBy = "goalDifference";
-              break;
-            case 'goalDifference':
-              nextOrderBy = "goalsInFavor"
-              break;
-            default:
-              console.log("YENDO A DEEP TIE", countryPairs);
-              //return countryPairs;
-              if(countryPairs < 2) return countryPairs;
-              countryPairs = deepTieBreaker(countryPairs, "points", group);
-              if(countryPairs[0][1].points > countryPairs[1][1].points){
-                return countryPairs
-              }
-              countryPairs = deepTieBreaker(countryPairs, "goalDifference", group);
-              if(countryPairs[0][1].goalDifference > countryPairs[1][1].goalDifference){
-                return countryPairs
-              }
-              countryPairs = deepTieBreaker(countryPairs, "goalsInFavor", group);
-              if(countryPairs[0][1].goalDifference > countryPairs[1][1].goalDifference){
-                return countryPairs
-              }
-              return [[null, null], [null, null], [null, null], [null, null]];
-              break;
-          }
-
-          var passingCountries = [];
-          var tiedCountries = [];
-          //countriesOrdered[i][1][orderBy]
-          while(countriesOrdered.length > 0){
-            if(countriesOrdered.length == 1){ passingCountries.push(countriesOrdered[0]); break; }
-            if(tiedCountries.length > 0 || passingCountries.length == 2) break;
-            var tied = false;
-            while(countriesOrdered.length > 1 && (countriesOrdered[0][1][orderBy] == countriesOrdered[1][1][orderBy]) ){
-              tied = true;
-              tiedCountries.push(_.flatten(countriesOrdered.splice(1,1)));
-            }
-            if(tied){
-              tiedCountries.push(countriesOrdered.shift());
-            }
-            if(!tiedCountries.length){
-              passingCountries.push(countriesOrdered.shift());
-            }
-          }
-          console.log("Passing", passingCountries, "Tied", tiedCountries, "Next Order By", nextOrderBy);
-          return _.flatten([passingCountries, tieBreaker(tiedCountries, nextOrderBy, group)], true);
-        }
-
-        function countriesThatPass(){
-            _.each($scope.groupsMatches, function(groupData, group){
-
-                var passingCountries = tieBreaker(_.pairs(groupData.standing), "points", group);
-                console.log("pasing", passingCountries);
-
-                if(passingCountries){
-                    $scope.standing[group][0]["country"] = passingCountries[0] ? passingCountries[0][0] : null;
-                    $scope.standing[group][1]["country"] = passingCountries[1] ? passingCountries[1][0] : null;
-                }else{
-                    $scope.standing[group][0]["country"] = "";
-                    $scope.standing[group][1]["country"] = "";
-                }
 
 
-            })
-            $scope.secondStageMatches.roundOf16.A = [_.clone($scope.standing.A[0]), _.clone($scope.standing.B[1])];
-            $scope.secondStageMatches.roundOf16.B = [_.clone($scope.standing.C[0]), _.clone($scope.standing.D[1])];
-            $scope.secondStageMatches.roundOf16.C = [_.clone($scope.standing.E[0]), _.clone($scope.standing.F[1])];
-            $scope.secondStageMatches.roundOf16.D = [_.clone($scope.standing.G[0]), _.clone($scope.standing.H[1])];
-            $scope.secondStageMatches.roundOf16.E = [_.clone($scope.standing.B[0]), _.clone($scope.standing.A[1])];
-            $scope.secondStageMatches.roundOf16.F = [_.clone($scope.standing.D[0]), _.clone($scope.standing.C[1])];
-            $scope.secondStageMatches.roundOf16.G = [_.clone($scope.standing.F[0]), _.clone($scope.standing.E[1])];
-            $scope.secondStageMatches.roundOf16.H = [_.clone($scope.standing.H[0]), _.clone($scope.standing.G[1])];
-        }
+
+
 
         $scope.standing = { //Countries that pass the first round
             A: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
@@ -291,24 +304,37 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
 
         $scope.$watch("secondStageMatches.semiFinals", function(){ //Calculate who passes to quarter finals
             var matchHolder = [];
+            var thirdFourthHolder = [];
             var concaTitle = "";
             _.each($scope.secondStageMatches.semiFinals, function(match, title){
                 if(match[0].score === "" && match[1].score === ""){
                     matchHolder.push({country: null});
+                    thirdFourthHolder.push({country: null});
                 }
                 else if(match[0].score > match[1].score){
                     matchHolder.push(_.clone(match[0]));
+                    thirdFourthHolder.push(match[1]);
                 }else if(match[0].score < match[1].score){
                     matchHolder.push(_.clone(match[1]));
+                    thirdFourthHolder.push(match[0]);
                 }else{
-                    _.each(match, function(country){ country.victorByPenalties ? matchHolder.push(_.clone(country)) : null });
+                    if(match[0].victorByPenalties){
+                      matchHolder.push(_.clone(match[0]));
+                      thirdFourthHolder.push(match[1]);
+                    }else{
+                      matchHolder.push(_.clone(match[1]));
+                      thirdFourthHolder.push(match[0]);
+                    }
                 }
                 concaTitle += title;
                 if(matchHolder.length === 2){
-
                     $scope.secondStageMatches.final[concaTitle][0]["country"] = matchHolder[0]["country"];
                     $scope.secondStageMatches.final[concaTitle][1]["country"] = matchHolder[1]["country"];
+                    //Third and fourth
+                    $scope.secondStageMatches.thirdFourth[concaTitle][0]["country"] = thirdFourthHolder[0]["country"];
+                    $scope.secondStageMatches.thirdFourth[concaTitle][1]["country"] = thirdFourthHolder[1]["country"];
                     matchHolder = [];
+                    thirdFourthHolder = [];
                     concaTitle = "";
                 }
             })

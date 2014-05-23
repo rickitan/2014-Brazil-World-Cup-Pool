@@ -39,3 +39,97 @@ exports.userMatchSchema = function(req, res){
         return res.send(schema);
     });
 }
+
+exports.calculateRanking = function(req,res){
+  if(!req.user || !req.user.admin) return res.send("You're not an admin")
+
+  async.waterfall([
+      function(callback){ //LOAD REAL RESULTS
+        MatchSchema.findOne({user: req.user.id}, function(err, adminSchema){
+          if(err) return res.send("Could't find you");
+          callback(null, adminSchema);
+        })
+      },
+      function(adminSchema, callback){ //LOAD USERS SCHEMAS
+        MatchSchema.find({user: {$ne: req.user.id}})
+          .populate('user')
+          .exec(function(err, userSchemas){
+            callback(null, adminSchema, userSchemas);
+          }
+        )
+      },
+      function(adminSchema, userSchemas, callback){
+        _.each(userSchemas, function(userSchema){
+          var points = calculatePoints(adminSchema, userSchema);
+          userSchema.user.points = points;
+          userSchema.user.save(function(err){if(err) callback(err, null)});
+
+        })
+      }
+  ], function (err, result) {
+     if(err) res.send(err);
+     res.send("Rankings calculates successfully" + result);
+  });
+}
+
+function calculatePoints(adminSchema, userSchema){
+  var points = 0;
+  var SAME_SCORE = 5;
+  var CORRECT_WINNER_OR_DRAW = 3;
+  var COUNTRY_IN_PHASE = 1;
+  var COUNTRY_IN_CORRECT_POSITION = 3;
+
+  var adminGroupPhase = adminSchema.groupPhase;
+  var userGroupPhase = userSchema.groupPhase;
+
+  var adminSecondPhase = adminSchema.secondStageMatches;
+  var userSecondPhase = userSchema.secondStageMatches;
+
+  function correctWinOrDraw(realMatch, userMatch){
+    if( (realMatch[0].score > realMatch[1].score) && (userMatch[0].score > userMatch[1].score) ) return true;
+    if( (realMatch[0].score < realMatch[1].score) && (userMatch[0].score < userMatch[1].score) ) return true;
+    if( (realMatch[0].score === realMatch[1].score) && (userMatch[0].score === userMatch[1].score) ) return true;
+    return false;
+  }
+
+  //Points for group Phase
+  _.each(adminGroupPhase, function(matches, group){
+    _.each(matches.matches, function(match, index){
+      if( (match[0].score === userGroupPhase[group].matches[index][0].score) && (match[1].score === userGroupPhase[group].matches[index][1].score) ){
+        points += SAME_SCORE;
+      }else if( correctWinOrDraw(match, userGroupPhase[group].matches[index]) ){
+        points += CORRECT_WINNER_OR_DRAW;
+      }
+    })
+  });
+
+  function correctCountriesInPhase(realPhase, userPhase){
+    var realPhaseCountries = _.pluck(realPhase, 'country');
+    var userPhaseCountries = _.pluck(userPhase, 'country');
+    var correctCountries = _.intersection(realPhaseCountries, userPhaseCountries);
+    points += (correctCountries.length * COUNTRY_IN_PHASE);
+  }
+
+
+  console.log("%j", userSecondPhase);
+  //Points for second Phase
+  _.each(adminSecondPhase, function(abcObject, phase){
+    _.each(abcObject, function(realMatches, abcCode){
+      var userMatches = userSecondPhase[phase][abcCode];
+      correctCountriesInPhase(realMatches, userMatches); //How many countries are correct in the phase
+      if( (realMatches[0].country === userMatches[0].country) && (realMatches[1].country === userMatches[1].country) ){ //Correct countries position
+        if( (realMatches[0].score === userMatches[0].score) && (realMatches[1].score === userMatches[1].score) ) points += SAME_SCORE; //Same score
+      }
+
+      if(realMatches[0].country === userMatches[0].country){
+        points += COUNTRY_IN_CORRECT_POSITION;
+      }
+      if(realMatches[1].country === userMatches[1].country){
+        points += COUNTRY_IN_CORRECT_POSITION;
+      }
+    })
+  });
+
+  return points;
+}
+
