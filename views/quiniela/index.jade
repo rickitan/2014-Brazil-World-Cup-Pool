@@ -34,7 +34,7 @@ block content
 
         // SECOND PHASE
         div.row
-            .col-xs-12(style="overflow-y:hidden; overflow-x:scroll")
+            .col-xs-12(style="overflow-y:hidden; overflow-x:scroll; -webkit-overflow-scrolling: touch")
                 div(style='position: relative; margin-top:20px; height: 570px; width:1140px;')
                     div(ng-repeat='(title, match) in secondStageMatches.roundOf16', ng-class='($index < 4) ? "roundOf16Left" : "roundOf16Right"', style='top:{{($index < 4) ? 150 * $index : 150*($index - 4)}}px')
                         .matchRow
