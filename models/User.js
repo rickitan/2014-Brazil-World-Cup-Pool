@@ -6,7 +6,7 @@ var userSchema = new mongoose.Schema({
   email: { type: String, unique: true, lowercase: true },
   password: String,
   admin: { type:Boolean, default:false},
-  points: {Number: default:0},
+  points: {type:Number, default:0},
 
   facebook: String,
   twitter: String,
