@@ -7,13 +7,19 @@ block content
             div(ng-repeat='group in agrupation')
                 .col-sm-4(style="padding-top:{{agrupation.length == 2 ? 15 : 0}}px")
                     h1(style='text-align: center') Group {{group}}
-                    div(ng-repeat='match in groupsMatches[group].matches', style='display: inline-block; padding: 5px; width: 154px; height: 53px; margin-left: {{ $index%2 * 23 }}px; border-left: {{$index%2}}px solid #cdd0d4; ')
-                        input(type='number', style='width:20px; height:21px; position: absolute; margin-left: 5px; margin-top: 2px', ng-model='match[0].score')
-                        span(style='display: inline; margin-left: 25px')
+                    div.col-lg-6(ng-repeat='match in groupsMatches[group].matches')
+                      div.row(style="text-align:center")
+                        div.col-xs-2
+                            input(type='text', ng-model='match[0].score', style="width:24px")
+                        div.col-xs-3
                             img(ng-src='/img/country_flags/{{match[0].country}}.png', width='50', height='43')
-                            | vs
+                        div.col-xs-2(style="text-align:center")
+                            span(style="margin-left:10px") vs
+                        div.col-xs-3
                             img(ng-src='/img/country_flags/{{match[1].country}}.png', width='50', height='43')
-                        input(type='number', style='width:20px; height:21px; position: absolute; margin-top: 2px', ng-model='match[1].score')
+                        div.col-xs-2
+                            input(type='text', ng-model='match[1].score', style="width:24px")
+
                 //Tabla de posiciones
                 .col-sm-4(ng-if="agrupation.length ==2 && $index==0", style="height:259px")
                     table.table.table-bordered.table-hover.table-condensed
