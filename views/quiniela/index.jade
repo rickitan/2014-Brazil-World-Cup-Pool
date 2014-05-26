@@ -10,7 +10,7 @@ block content
                     div.col-lg-6(ng-repeat='match in groupsMatches[group].matches')
                       div.row(style="text-align:center")
                         div.col-xs-2
-                            input(type='text', ng-model='match[0].score', style="width:24px")
+                            input(type='number', ng-model='match[0].score', style="width:28px; font-size:11px")
                         div.col-xs-3
                             img(ng-src='/img/country_flags/{{match[0].country}}.png', width='50', height='43')
                         div.col-xs-2(style="text-align:center")
@@ -18,7 +18,7 @@ block content
                         div.col-xs-3
                             img(ng-src='/img/country_flags/{{match[1].country}}.png', width='50', height='43')
                         div.col-xs-2
-                            input(type='text', ng-model='match[1].score', style="width:24px")
+                            input(type='number', ng-model='match[1].score', style="width:28px; font-size:11px")
 
                 //Tabla de posiciones
                 .col-sm-4(ng-if="agrupation.length ==2 && $index==0", style="height:259px")
