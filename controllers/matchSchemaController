@@ -40,7 +40,42 @@ exports.userMatchSchema = function(req, res){
     });
 }
 
-exports.calculateRanking = function(req,res){
+
+exports.calculateRankingGroupPhase = function(req, res){
+  if(!req.user || !req.user.admin) return res.send("You're not an admin")
+
+  async.waterfall([
+    function(callback){ //LOAD REAL RESULTS
+      MatchSchema.findOne({user: req.user.id}, function(err, adminSchema){
+        if(err) return res.send("Could't find you");
+        callback(null, adminSchema);
+      })
+    },
+    function(adminSchema, callback){ //LOAD USERS SCHEMAS
+      MatchSchema.find({user: {$ne: req.user.id}})
+        .populate('user')
+        .exec(function(err, userSchemas){
+          callback(null, adminSchema, userSchemas);
+        }
+      )
+    },
+    function(adminSchema, userSchemas, callback){
+      _.each(userSchemas, function(userSchema){
+        var points = calculatePoints(adminSchema, userSchema, false);
+        userSchema.user.points = points;
+        userSchema.user.save(function(err){if(err) callback(err, null)});
+
+      })
+      res.send("Rankings calculates successfully");
+
+    }
+  ], function (err, result) {
+    if(err) res.send(err);
+  });
+}
+
+
+exports.calculateRankingSecondPhase = function(req,res){
   if(!req.user || !req.user.admin) return res.send("You're not an admin")
 
   async.waterfall([
@@ -60,11 +95,13 @@ exports.calculateRanking = function(req,res){
       },
       function(adminSchema, userSchemas, callback){
         _.each(userSchemas, function(userSchema){
-          var points = calculatePoints(adminSchema, userSchema);
+          var points = calculatePoints(adminSchema, userSchema, true);
           userSchema.user.points = points;
           userSchema.user.save(function(err){if(err) callback(err, null)});
 
         })
+        res.send("Rankings calculates successfully");
+
       }
   ], function (err, result) {
      if(err) res.send(err);
@@ -72,12 +109,13 @@ exports.calculateRanking = function(req,res){
   });
 }
 
-function calculatePoints(adminSchema, userSchema){
+function calculatePoints(adminSchema, userSchema, calculateSecondStage){
   var points = 0;
   var SAME_SCORE = 5;
   var CORRECT_WINNER_OR_DRAW = 3;
   var COUNTRY_IN_PHASE = 1;
-  var COUNTRY_IN_CORRECT_POSITION = 3;
+  var COUNTRY_IN_CORRECT_POSITION = 2;
+  var CORRECT_CHAMPION = 10;
 
   var adminGroupPhase = adminSchema.groupPhase;
   var userGroupPhase = userSchema.groupPhase;
@@ -87,38 +125,64 @@ function calculatePoints(adminSchema, userSchema){
 
   function correctWinOrDraw(realMatch, userMatch){
     if( (realMatch[0].score > realMatch[1].score) && (userMatch[0].score > userMatch[1].score) ) return true;
-    if( (realMatch[0].score < realMatch[1].score) && (userMatch[0].score < userMatch[1].score) ) return true;
-    if( (realMatch[0].score === realMatch[1].score) && (userMatch[0].score === userMatch[1].score) ) return true;
-    return false;
+    else if( (realMatch[0].score < realMatch[1].score) && (userMatch[0].score < userMatch[1].score) ) return true;
+    else if( (realMatch[0].score === realMatch[1].score) && (userMatch[0].score === userMatch[1].score) ) return true;
+    else return false;
   }
 
   //Points for group Phase
   _.each(adminGroupPhase, function(matches, group){
     _.each(matches.matches, function(match, index){
-      if( (match[0].score === userGroupPhase[group].matches[index][0].score) && (match[1].score === userGroupPhase[group].matches[index][1].score) ){
-        points += SAME_SCORE;
-      }else if( correctWinOrDraw(match, userGroupPhase[group].matches[index]) ){
-        points += CORRECT_WINNER_OR_DRAW;
+
+      if(match[0].score !== null){ //Checking for admin on null
+        if( (match[0].score === userGroupPhase[group].matches[index][0].score) && (match[1].score === userGroupPhase[group].matches[index][1].score) ){
+          points += SAME_SCORE;
+        }else if( correctWinOrDraw(match, userGroupPhase[group].matches[index]) ){
+          points += CORRECT_WINNER_OR_DRAW;
+        }
       }
+
     })
   });
 
-  function correctCountriesInPhase(realPhase, userPhase){
-    var realPhaseCountries = _.pluck(realPhase, 'country');
-    var userPhaseCountries = _.pluck(userPhase, 'country');
+  if(!calculateSecondStage) return points; //Return only points for first phase
+
+  function correctCountriesInPhase(realPhaseCountries, userPhaseCountries){
+
     var correctCountries = _.intersection(realPhaseCountries, userPhaseCountries);
+    console.log("Correct Countries", correctCountries);
     points += (correctCountries.length * COUNTRY_IN_PHASE);
   }
 
 
-  console.log("%j", userSecondPhase);
+  function correctWinOnSecondStage(realMatch, userMatch){
+
+    if(realMatch[0].score === null || realMatch[1].score === null) return false;  //Checking for admin on null
+
+    if( (realMatch[0].score > realMatch[1].score) && (userMatch[0].score > userMatch[1].score) ) return true;
+    else if( (realMatch[0].score < realMatch[1].score) && (userMatch[0].score < userMatch[1].score) ) return true;
+    else if( (realMatch[0].score === realMatch[1].score) && (userMatch[0].score === userMatch[1].score) ){
+      if(realMatch[0].victorByPenalties && userMatch[0].victorByPenalties) return true;
+      if(realMatch[1].victorByPenalties && userMatch[1].victorByPenalties) return true;
+    }
+    return false;
+  }
+
+
   //Points for second Phase
   _.each(adminSecondPhase, function(abcObject, phase){
+
+    var realPhaseCountries = _.chain(abcObject).values().flatten().pluck("country").value();
+    var userPhaseCountries = _.chain(userSecondPhase[phase]).values().flatten().pluck("country").value();
+    correctCountriesInPhase(realPhaseCountries, userPhaseCountries); //How many countries are correct in the phase
+
     _.each(abcObject, function(realMatches, abcCode){
+
       var userMatches = userSecondPhase[phase][abcCode];
-      correctCountriesInPhase(realMatches, userMatches); //How many countries are correct in the phase
+      //correctCountriesInPhase(realMatches, userMatches); //How many countries are correct in the phase
       if( (realMatches[0].country === userMatches[0].country) && (realMatches[1].country === userMatches[1].country) ){ //Correct countries position
         if( (realMatches[0].score === userMatches[0].score) && (realMatches[1].score === userMatches[1].score) ) points += SAME_SCORE; //Same score
+        else if(correctWinOnSecondStage(realMatches, userMatches)) points += CORRECT_WINNER_OR_DRAW;
       }
 
       if(realMatches[0].country === userMatches[0].country){
@@ -127,6 +191,9 @@ function calculatePoints(adminSchema, userSchema){
       if(realMatches[1].country === userMatches[1].country){
         points += COUNTRY_IN_CORRECT_POSITION;
       }
+
+      if( (abcCode === "ABCDEFGH" && phase === "final") && (correctWinOnSecondStage(realMatches, userMatches)) ) points += CORRECT_CHAMPION;
+
     })
   });
 

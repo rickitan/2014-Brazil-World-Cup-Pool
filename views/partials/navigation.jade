@@ -26,7 +26,7 @@
               a(href='/signup') Create Account
         else
           script.
-            window.user = {id: '!{user._id}', email: '!{user.email}'};
+            window.user = {id: '!{user._id}', email: '!{user.email}', admin: !{user.admin}};
           li.dropdown(class=title=='Account Management'?'active':undefined)
             a.dropdown-toggle(href='#', data-toggle='dropdown')
               if user.profile.picture

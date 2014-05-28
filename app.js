@@ -133,10 +133,13 @@ app.get("/userRankings", quinielaController.userRankings);
 
 
 
+
 app.get("/user/:user_id/matchSchema", matchSchemaController.userMatchSchema);
 app.post("/user/:user_id/matchSchema" , matchSchemaController.save)
 
-app.get("/calculateRankings", matchSchemaController.calculateRanking);
+app.get("/calculateRankingsGroupPhase", matchSchemaController.calculateRankingGroupPhase);
+app.get("/calculateRankingsSecondPhase", matchSchemaController.calculateRankingSecondPhase);
+
 
 
 

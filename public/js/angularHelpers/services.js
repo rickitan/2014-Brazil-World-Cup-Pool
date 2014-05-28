@@ -144,30 +144,30 @@ app.factory('CleanGroupSchema', function(){
         },
         secondStageMatches: {
             "roundOf16":{
-                A: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                B: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                C: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                D: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                E: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                F: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                G: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                H: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}]
+                A: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                B: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                C: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                D: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                E: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                F: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                G: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                H: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}]
             },
             "quarterFinals":{
-                AB: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                CD: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                EF: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                GH: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}]
+                AB: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                CD: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                EF: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                GH: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}]
             },
             "semiFinals":{
-                ABCD: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-                EFGH: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}]
+                ABCD: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+                EFGH: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}]
             },
             "thirdFourth":{
-              ABCDEFGH: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}]
+              ABCDEFGH: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}]
             },
             "final":{
-                ABCDEFGH: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}]
+                ABCDEFGH: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}]
             }
         }
     }

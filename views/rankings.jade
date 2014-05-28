@@ -12,3 +12,7 @@ block content
                     td {{$index}}
                     td {{user.email}}
                     td {{user.points}}
+
+        div.row(ng-show="user.admin")
+            button.btn.btn-danger(ng-click="calculateGroupPhaseRankings()") Calculate Group Phase Ranking
+            button.btn.btn-danger(ng-click="calculateSecondPhaseRankings()") Calculate Second Phase Ranking
