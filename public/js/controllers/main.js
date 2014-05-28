@@ -341,6 +341,26 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
         }, true);
 
 
+        /*$scope.$watch("secondStageMatches.final", function(){ //Calculate who passes to quarter finals
+          var matchHolder = [];
+          _.each($scope.secondStageMatches.final, function(match, title){
+            if(match[0].score === "" && match[1].score === ""){
+              matchHolder.push({country: null});
+            }else if(match[0].score > match[1].score){
+              matchHolder.push(_.clone(match[0]));
+            }else if(match[0].score < match[1].score){
+              matchHolder.push(_.clone(match[1]));
+            }else{
+              _.each(match, function(country){ country.victorByPenalties ? matchHolder.push(_.clone(country)) : null });
+            }
+
+            if(matchHolder.length === 1){
+              $scope.secondStageMatches.champion.champion[0]["country"] = matchHolder[0]["country"];
+              matchHolder = [];
+            }
+          })
+        }, true);*/
+
         $scope.victorByPenalties = function(round, title, winnerIndex){
             _.each($scope.secondStageMatches[round][title], function(country, index){
                 country.victorByPenalties = (winnerIndex == index) ? true : false;

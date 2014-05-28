@@ -169,6 +169,12 @@ app.factory('CleanGroupSchema', function(){
             "final":{
                 ABCDEFGH: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}]
             }
+            /*"third":{
+                third: [{country: "", score:null, victorByPenalties:true}]
+            },
+            "champion":{
+                champion: [{country: "", score:null, victorByPenalties:true}]
+            }*/
         }
     }
 })

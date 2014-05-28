@@ -116,6 +116,7 @@ function calculatePoints(adminSchema, userSchema, calculateSecondStage){
   var COUNTRY_IN_PHASE = 1;
   var COUNTRY_IN_CORRECT_POSITION = 2;
   var CORRECT_CHAMPION = 10;
+  var CORRECT_THIRD = 3;
 
   var adminGroupPhase = adminSchema.groupPhase;
   var userGroupPhase = userSchema.groupPhase;
@@ -168,6 +169,31 @@ function calculatePoints(adminSchema, userSchema, calculateSecondStage){
     return false;
   }
 
+  function correctChampionWin(realMatch, userMatch){
+    var championHolder = "";
+    var userChampionHolder = "";
+    if(realMatch[0].score > realMatch[1].score){
+      championHolder = realMatch[0].country
+    }else if(realMatch[0].score < realMatch[1].score){
+      championHolder = realMatch[1].country
+    }else{
+      if(realMatch[0].victorByPenalties) championHolder = realMatch[0].country;
+      else if(realMatch[1].victorByPenalties) championHolder = realMatch[1].country
+    }
+
+    if(userMatch[0].score > userMatch[1].score){
+      userChampionHolder = userMatch[0].country
+    }else if(userMatch[0].score < userMatch[1].score){
+      userChampionHolder = userMatch[1].country
+    }else{
+      if(userMatch[0].victorByPenalties) userChampionHolder = userMatch[0].country;
+      else if(userMatch[1].victorByPenalties) userChampionHolder = userMatch[1].country;
+    }
+
+    if( (championHolder != "" && userChampionHolder != "") && (championHolder === userChampionHolder)) return true;
+    else return false;
+  }
+
 
   //Points for second Phase
   _.each(adminSecondPhase, function(abcObject, phase){
@@ -192,7 +218,8 @@ function calculatePoints(adminSchema, userSchema, calculateSecondStage){
         points += COUNTRY_IN_CORRECT_POSITION;
       }
 
-      if( (abcCode === "ABCDEFGH" && phase === "final") && (correctWinOnSecondStage(realMatches, userMatches)) ) points += CORRECT_CHAMPION;
+      if( (abcCode === "ABCDEFGH" && phase === "final") && (correctChampionWin(realMatches, userMatches)) ) points += CORRECT_CHAMPION;
+      if( (abcCode === "ABCDEFGH" && phase === "thirdFourth") && (correctChampionWin(realMatches, userMatches)) ) points += CORRECT_THIRD;
 
     })
   });
