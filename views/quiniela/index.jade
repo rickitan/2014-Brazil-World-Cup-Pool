@@ -10,11 +10,11 @@ block content
                     div.col-lg-6(ng-repeat='match in groupsMatches[group].matches')
                       div.row(style="text-align:center")
                         div.col-xs-2
-                            input(type='number', ng-model='match[0].score', style="width:28px; font-size:11px")
+                            input(type='number', ng-model='match[0].score', style="width:28px; font-size:11px; z-index:1")
                         div.col-xs-3
                             img(ng-src='/img/country_flags/{{match[0].country}}.png', width='50', height='43')
                         div.col-xs-2(style="text-align:center")
-                            span(style="margin-left:10px") vs
+                            span(style="margin-left:6px") vs
                         div.col-xs-3
                             img(ng-src='/img/country_flags/{{match[1].country}}.png', width='50', height='43')
                         div.col-xs-2
