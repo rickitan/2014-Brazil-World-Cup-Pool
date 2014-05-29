@@ -14,6 +14,7 @@
 //= require lib/angular/angular
 //= require lib/angular-resource/angular-resource
 //= require angularHelpers/services
+//= require angularHelpers/directives
 //= require lib/underscore/underscore
 //= require controllers/main
 //= require controllers/rankingsController
