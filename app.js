@@ -128,6 +128,13 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
  */
 
 app.get("/quiniela", quinielaController.index);
+app.get("/reglas", function(req, res){
+  res.render('rules', {
+    title: 'Reglas'
+  });
+});
+
+
 app.get("/rankings", quinielaController.rankings);
 app.get("/userRankings", quinielaController.userRankings);
 

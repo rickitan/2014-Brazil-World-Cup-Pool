@@ -6,15 +6,18 @@
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(href='/') World Cup Pool
+      a.navbar-brand(href='/') TechQuiniela
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         li(class=title=='Home'?'active':undefined)
           a(href='/') Home
+        li(class=title=='Reglas'?'active':undefined)
+          a(href='/reglas') Reglas e Información
         li(class=title=='Quiniela'?'active':undefined)
-          a(href='/quiniela') My Pool
+          a(href='/quiniela') Mi Quiniela
         li(class=title=='Rankings'?'active':undefined)
-            a(href='/rankings') Rankings
+          a(href='/rankings') Rankings
+
         //li(class=title=='Contact'?'active':undefined)
           a(href='/contact') Contact
       ul.nav.navbar-nav.navbar-right
@@ -23,7 +26,7 @@
             a(href='/login') Login
           if secrets.localAuth
             li(class=title=='Create Account'?'active':undefined)
-              a(href='/signup') Create Account
+              a(href='/signup') Registrarse
         else
           script.
             window.user = {id: '!{user._id}', email: '!{user.email}', admin: !{user.admin}};
@@ -36,6 +39,6 @@
               | #{user.profile.name || user.email || user.id}&nbsp;
               i.caret
             ul.dropdown-menu
-              li: a(href='/account') My Account
+              li: a(href='/account') Mi cuenta
               li.divider
               li: a(href='/logout') Logout

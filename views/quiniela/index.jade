@@ -1,12 +1,12 @@
 extends ../layout
 block content
     div(ng-controller="MainCtrl")
-        h1 Pool
+        h1 Quiniela
 
         div.row(ng-repeat="agrupation in groupsLayout")
             div(ng-repeat='group in agrupation')
                 .col-sm-4(style="padding-top:{{agrupation.length == 2 ? 15 : 0}}px")
-                    h1(style='text-align: center') Group {{group}}
+                    h1(style='text-align: center') Grupo {{group}}
                     div.col-lg-6(ng-repeat='match in groupsMatches[group].matches')
                       div.row(style="text-align:center")
                         div.col-xs-2
@@ -25,9 +25,9 @@ block content
                     table.table.table-bordered.table-hover.table-condensed
                         thead
                             tr(style="line-height: 25px;min-height: 25px;height: 25px;")
-                                th.col-xs-2 Group
-                                th.col-xs-5 First
-                                th.col-xs-5 Second
+                                th.col-xs-2 Grupo
+                                th.col-xs-5 Primero
+                                th.col-xs-5 Segundo
                         tbody
                             tr(ng-repeat="(group, standing) in standing", style="line-height: 25px;min-height: 25px;height: 25px;")
                                 td {{group}}
@@ -94,7 +94,7 @@ block content
 
                     //third and fourth game
                     div(style='top: 374px; right:345px; width:450px; text-align:center; position:absolute; z-index:1; background-color:white;')
-                        h5 3rd & 4th
+                        h5 3ero & 4to
                     div(style='top: 400px; right:345px; width:450px; height:50px; border:1px solid grey; position:absolute; z-index:1; background-color:white;')
                         //h4 3rd and 4th
                         div

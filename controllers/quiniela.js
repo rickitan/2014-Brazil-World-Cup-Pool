@@ -5,7 +5,7 @@ var User = require('../models/User');
 
 exports.index = function(req, res) {
     res.render('quiniela/index', {
-        title: 'Pool'
+        title: 'Quiniela'
     });
 };
 
