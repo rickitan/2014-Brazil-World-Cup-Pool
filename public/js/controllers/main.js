@@ -243,14 +243,14 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
 
 
         $scope.standing = { //Countries that pass the first round
-            A: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-            B: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-            C: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-            D: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-            E: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-            F: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-            G: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}],
-            H: [{country: "", score:"", victorByPenalties:true}, {country: "", score:"", victorByPenalties:false}]
+            A: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+            B: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+            C: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+            D: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+            E: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+            F: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+            G: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}],
+            H: [{country: "", score:null, victorByPenalties:true}, {country: "", score:null, victorByPenalties:false}]
         };
 
 
@@ -258,7 +258,7 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
             var matchHolder = [];
             var concaTitle = "";
             _.each($scope.secondStageMatches.roundOf16, function(match, title){
-                if(match[0].score === "" && match[1].score === ""){
+                if(match[0].score === null && match[1].score === null){
                     matchHolder.push({country: null});
                 }
                 else if(match[0].score > match[1].score){
@@ -283,7 +283,7 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
             var matchHolder = [];
             var concaTitle = "";
             _.each($scope.secondStageMatches.quarterFinals, function(match, title){
-                if(match[0].score === "" && match[1].score === ""){
+                if(match[0].score === null && match[1].score === null){
                     matchHolder.push({country: null});
                 }else if(match[0].score > match[1].score){
                     matchHolder.push(_.clone(match[0]));
@@ -307,7 +307,7 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
             var thirdFourthHolder = [];
             var concaTitle = "";
             _.each($scope.secondStageMatches.semiFinals, function(match, title){
-                if(match[0].score === "" && match[1].score === ""){
+                if(match[0].score === null && match[1].score === null){
                     matchHolder.push({country: null});
                     thirdFourthHolder.push({country: null});
                 }

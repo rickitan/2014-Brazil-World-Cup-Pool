@@ -44,53 +44,53 @@ block content
                 div(style='position: relative; margin-top:20px; height: 570px; width:1140px;')
                     div(ng-repeat='(title, match) in secondStageMatches.roundOf16', ng-class='($index < 4) ? "roundOf16Left" : "roundOf16Right"', style='top:{{($index < 4) ? 150 * $index : 150*($index - 4)}}px')
                         .matchRow
-                            input.inputScore(type='text', ng-model='match[0].score', ng-show='match[0].country')
+                            input.inputScore(type='number', ng-model='match[0].score', ng-show='match[0].country')
                             img(ng-src='/img/country_flags/{{match[0].country}}.png', width='50', height='43', ng-show='match[0].country')
                             .radioContainer
-                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== "" && match[1].score !== "")', type='radio', ng-checked='match[0].victorByPenalties', name='{{title}}', ng-click='victorByPenalties("roundOf16", title, 0)')
+                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== null && match[1].score !== null)', type='radio', ng-checked='match[0].victorByPenalties', name='{{title}}', ng-click='victorByPenalties("roundOf16", title, 0)')
                         .vsDiv
                             span vs
                         .matchRow
-                            input.inputScore(type='text', ng-model='match[1].score', ng-show='match[1].country')
+                            input.inputScore(type='number', ng-model='match[1].score', ng-show='match[1].country')
                             img(ng-src='/img/country_flags/{{match[1].country}}.png', width='50', height='43', ng-show='match[1].country')
                             .radioContainer
-                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== "" && match[1].score !== "")', type='radio', name='{{title}}',ng-checked='match[1].victorByPenalties', ng-click='victorByPenalties("roundOf16", title, 1)')
+                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== null && match[1].score !== null)', type='radio', name='{{title}}',ng-checked='match[1].victorByPenalties', ng-click='victorByPenalties("roundOf16", title, 1)')
                     div(ng-repeat='(title, match) in secondStageMatches.quarterFinals', ng-class='($index < 2) ? "quarterFinalsLeft" : "quarterFinalsRight"', style='top:{{($index < 2) ? 50 + $index*300 : 50 + (($index-2) * 300)}}px;')
                         .countryContainer(style='float: {{($index < 2) ? "right" : "left"}}')
-                            input(type='text', style='width:20px; height:21px;', ng-model='match[0].score', ng-show='match[0].country')
+                            input(type='number', style='width:20px; height:21px;', ng-model='match[0].score', ng-show='match[0].country')
                             img(ng-src='/img/country_flags/{{match[0].country}}.png', width='50', height='43', style='display:inline-block; margin-top:6px', ng-show='match[0].country')
                             .radioContainer
-                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== "" && match[1].score !== "") && match[0].country', type='radio', ng-checked='match[0].victorByPenalties', name='{{title}}', ng-click='victorByPenalties("quarterFinals", title, 0)')
+                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== null && match[1].score !== null) && match[0].country', type='radio', ng-checked='match[0].victorByPenalties', name='{{title}}', ng-click='victorByPenalties("quarterFinals", title, 0)')
                         div(style='float: {{($index < 2) ? "right" : "left"}}; clear:both; margin-top:19px') vs
                         .countryContainer(style='float: {{($index < 2) ? "right" : "left"}}; clear:both; margin-top:23px')
-                            input(type='text', style='width:20px; height:21px;', ng-model='match[1].score', ng-show='match[1].country')
+                            input(type='number', style='width:20px; height:21px;', ng-model='match[1].score', ng-show='match[1].country')
                             img(ng-src='/img/country_flags/{{match[1].country}}.png', width='50', height='43', style='display:inline-block; margin-top:6px', ng-show='match[1].country')
                             .radioContainer
-                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== "" && match[1].score !== "") && match[1].country', type='radio', ng-checked='match[1].victorByPenalties', name='{{title}}', ng-click='victorByPenalties("quarterFinals", title, 1)')
+                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== null && match[1].score !== null) && match[1].country', type='radio', ng-checked='match[1].victorByPenalties', name='{{title}}', ng-click='victorByPenalties("quarterFinals", title, 1)')
                     div(ng-repeat='(title, match) in secondStageMatches.semiFinals', ng-class='($index < 1 ) ? "semiFinalsLeft" : "semiFinalsRight"')
                         .countryContainer(style='float: {{($index < 1) ? "right" : "left"}}')
-                            input(type='text', style='width:20px; height:21px;', ng-model='match[0].score', ng-show='match[0].country')
+                            input(type='number', style='width:20px; height:21px;', ng-model='match[0].score', ng-show='match[0].country')
                             img(ng-src='/img/country_flags/{{match[0].country}}.png', width='50', height='43', style='display:inline-block; margin-top:6px', ng-show='match[0].country')
                             .radioContainer
-                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== "" && match[1].score !== "") && match[0].country', type='radio', ng-checked='match[0].victorByPenalties', name='{{title}}', ng-click='victorByPenalties("semiFinals", title, 0)')
+                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== null && match[1].score !== null) && match[0].country', type='radio', ng-checked='match[0].victorByPenalties', name='{{title}}', ng-click='victorByPenalties("semiFinals", title, 0)')
                         div(style='float: {{($index < 1) ? "right" : "left"}}; clear:both; margin-top:91px') vs
                         .countryContainer(style='float: {{($index < 1) ? "right" : "left"}}; clear:both; margin-top:100px')
-                            input(type='text', style='width:20px; height:21px;', ng-model='match[1].score', ng-show='match[1].country')
+                            input(type='number', style='width:20px; height:21px;', ng-model='match[1].score', ng-show='match[1].country')
                             img(ng-src='/img/country_flags/{{match[1].country}}.png', width='50', height='43', style='display:inline-block; margin-top:6px', ng-show='match[1].country')
                             .radioContainer
-                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== "" && match[1].score !== "") && match[1].country', type='radio', ng-checked='match[1].victorByPenalties', name='{{title}}', ng-click='victorByPenalties("semiFinals", title, 1)')
+                                input(ng-show='(match[0].score == match[1].score) && (match[0].score !== null && match[1].score !== null) && match[1].country', type='radio', ng-checked='match[1].victorByPenalties', name='{{title}}', ng-click='victorByPenalties("semiFinals", title, 1)')
                     div(style='top: 250px; width:450px; height:50px; border:1px solid grey; position:absolute; z-index:1; background-color:white')
                         div(ng-show='secondStageMatches.final.ABCDEFGH[0].country')
-                            input(type='text', style='width:20px; height:21px; position: absolute; margin-left: 370px; margin-top: 13px', ng-model='secondStageMatches.final.ABCDEFGH[0].score')
+                            input(type='number', style='width:20px; height:21px; position: absolute; margin-left: 370px; margin-top: 13px', ng-model='secondStageMatches.final.ABCDEFGH[0].score')
                             img(ng-src='/img/country_flags/{{secondStageMatches.final.ABCDEFGH[0].country}}.png', width='50', height='43', style=' margin-left:387px; margin-top:10px')
                             div(style='width:20px; height:21px; position: absolute; margin-left: -3px; margin-top: 12px; display: inline-block')
-                                input(ng-show='(secondStageMatches.final.ABCDEFGH[0].score == secondStageMatches.final.ABCDEFGH[1].score) && (secondStageMatches.final.ABCDEFGH[0].score != "" && secondStageMatches.final.ABCDEFGH[1].score != ""  )', type='radio',ng-checked="secondStageMatches.final.ABCDEFGH[0].victorByPenalties", name='final', ng-click='victorByPenalties("final", "ABCDEFGH", 0)')
+                                input(ng-show='(secondStageMatches.final.ABCDEFGH[0].score == secondStageMatches.final.ABCDEFGH[1].score) && (secondStageMatches.final.ABCDEFGH[0].score != null && secondStageMatches.final.ABCDEFGH[1].score != null  )', type='radio',ng-checked="secondStageMatches.final.ABCDEFGH[0].victorByPenalties", name='final', ng-click='victorByPenalties("final", "ABCDEFGH", 0)')
                     div(style='top: 250px; right:0px; width:450px; height:50px; border:1px solid grey; position:absolute; z-index:1; background-color:white')
                         div(ng-show='secondStageMatches.final.ABCDEFGH[1].country')
                             div(style='width:20px; height:21px; position: absolute; margin-left: 2px; margin-top: 12px; display: inline-block')
-                                input(ng-show='(secondStageMatches.final.ABCDEFGH[0].score == secondStageMatches.final.ABCDEFGH[1].score) && (secondStageMatches.final.ABCDEFGH[0].score != "" && secondStageMatches.final.ABCDEFGH[1].score != ""  )', type='radio',ng-checked="secondStageMatches.final.ABCDEFGH[1].victorByPenalties", name='final', ng-clicked='victorByPenalties("final", "ABCDEFGH", 1)')
+                                input(ng-show='(secondStageMatches.final.ABCDEFGH[0].score == secondStageMatches.final.ABCDEFGH[1].score) && (secondStageMatches.final.ABCDEFGH[0].score != null && secondStageMatches.final.ABCDEFGH[1].score != null  )', type='radio',ng-checked="secondStageMatches.final.ABCDEFGH[1].victorByPenalties", name='final', ng-clicked='victorByPenalties("final", "ABCDEFGH", 1)')
                             img(ng-src='/img/country_flags/{{secondStageMatches.final.ABCDEFGH[1].country}}.png', width='50', height='43', style=' margin-left:11px; margin-top:10px')
-                            input(type='text', style='width:20px; height:21px; position: absolute; margin-left: -3px; margin-top: 13px', ng-model='secondStageMatches.final.ABCDEFGH[1].score')
+                            input(type='number', style='width:20px; height:21px; position: absolute; margin-left: -3px; margin-top: 13px', ng-model='secondStageMatches.final.ABCDEFGH[1].score')
 
                     //third and fourth game
                     div(style='top: 374px; right:345px; width:450px; text-align:center; position:absolute; z-index:1; background-color:white;')
@@ -99,15 +99,15 @@ block content
                         //h4 3rd and 4th
                         div
                             span(style="margin-left:5px", ng-show="secondStageMatches.thirdFourth.ABCDEFGH[0].country")
-                                input(type='text', style='width:20px; height:21px;', ng-model='secondStageMatches.thirdFourth.ABCDEFGH[0].score')
+                                input(type='number', style='width:20px; height:21px;', ng-model='secondStageMatches.thirdFourth.ABCDEFGH[0].score')
                                 img(ng-src='/img/country_flags/{{secondStageMatches.thirdFourth.ABCDEFGH[0].country}}.png', width='50', height='43', style='margin-top:11px')
                                 div(style='width:20px; height:21px; position: absolute; margin-left: -3px; margin-top: 12px; display: inline-block')
-                                    input(ng-show='(secondStageMatches.thirdFourth.ABCDEFGH[0].score == secondStageMatches.thirdFourth.ABCDEFGH[1].score) && (secondStageMatches.thirdFourth.ABCDEFGH[0].score !== "" && secondStageMatches.thirdFourth.ABCDEFGH[1].score !== "") && secondStageMatches.thirdFourth.ABCDEFGH[0].country', type='radio',ng-checked="secondStageMatches.thirdFourth.ABCDEFGH[0].victorByPenalties", name='thirdFourth', ng-click='victorByPenalties("thirdFourth", "ABCDEFGH", 0)')
+                                    input(ng-show='(secondStageMatches.thirdFourth.ABCDEFGH[0].score == secondStageMatches.thirdFourth.ABCDEFGH[1].score) && (secondStageMatches.thirdFourth.ABCDEFGH[0].score !== null && secondStageMatches.thirdFourth.ABCDEFGH[1].score !== null) && secondStageMatches.thirdFourth.ABCDEFGH[0].country', type='radio',ng-checked="secondStageMatches.thirdFourth.ABCDEFGH[0].victorByPenalties", name='thirdFourth', ng-click='victorByPenalties("thirdFourth", "ABCDEFGH", 0)')
                             span(style="float:right; margin-right:15px", ng-show="secondStageMatches.thirdFourth.ABCDEFGH[1].country")
-                                input(type='text', style='width:20px; height:21px;', ng-model='secondStageMatches.thirdFourth.ABCDEFGH[1].score')
+                                input(type='number', style='width:20px; height:21px;', ng-model='secondStageMatches.thirdFourth.ABCDEFGH[1].score')
                                 img(ng-src='/img/country_flags/{{secondStageMatches.thirdFourth.ABCDEFGH[1].country}}.png', width='50', height='43', style='margin-top:11px')
                                 div(style='width:20px; height:21px; position: absolute; margin-left: -3px; margin-top: 12px; display: inline-block')
-                                    input(ng-show='(secondStageMatches.thirdFourth.ABCDEFGH[0].score == secondStageMatches.thirdFourth.ABCDEFGH[1].score) && (secondStageMatches.thirdFourth.ABCDEFGH[0].score !== "" && secondStageMatches.thirdFourth.ABCDEFGH[1].score !== "") && secondStageMatches.thirdFourth.ABCDEFGH[1].country', type='radio',ng-checked="secondStageMatches.thirdFourth.ABCDEFGH[1].victorByPenalties", name='thirdFourth', ng-click='victorByPenalties("thirdFourth", "ABCDEFGH", 1)')
+                                    input(ng-show='(secondStageMatches.thirdFourth.ABCDEFGH[0].score == secondStageMatches.thirdFourth.ABCDEFGH[1].score) && (secondStageMatches.thirdFourth.ABCDEFGH[0].score !== null && secondStageMatches.thirdFourth.ABCDEFGH[1].score !== null) && secondStageMatches.thirdFourth.ABCDEFGH[1].country', type='radio',ng-checked="secondStageMatches.thirdFourth.ABCDEFGH[1].victorByPenalties", name='thirdFourth', ng-click='victorByPenalties("thirdFourth", "ABCDEFGH", 1)')
 
         .row(style='text-align: right', ng-show="user")
             button.btn.btn-warning(ng-click="saveMatchSchema()") Guardar
