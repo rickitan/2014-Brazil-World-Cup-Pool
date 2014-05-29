@@ -26,10 +26,47 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
         $scope.groupsLayout = [['A','B','C'],['D','E'],['F','G','H']]; //For iterating and adding table in the middle with standing
 
         $scope.saveMatchSchema = function(){
+          if(validateMatchShema() ||  $scope.user.admin){
             MatchSchema.save({id:window.user.id, groupsMatches: $scope.groupsMatches, secondStageMatches: $scope.secondStageMatches}, function(){
               alert("Your pool have been saved!");
             });
+          }else{
+            alert("You have some empty fields, please fill them!");
+          }
+
         }
+
+        function validateMatchShema(){
+          var valid = true;
+          _.each($scope.groupsMatches, function(groupData, group){ //Groups Phase
+            _.each(groupData.matches, function(match){
+              if(match[0].score === null ||  match[1].score === null) valid = false;
+            })
+          })
+
+          _.each($scope.secondStageMatches.roundOf16, function(match, title){
+            if(match[0].score === null ||  match[1].score === null) valid = false;
+          })
+
+          _.each($scope.secondStageMatches.quarterFinals, function(match, title){
+            if(match[0].score === null ||  match[1].score === null) valid = false;
+          })
+
+          _.each($scope.secondStageMatches.semiFinals, function(match, title){
+            if(match[0].score === null ||  match[1].score === null) valid = false;
+          })
+
+          _.each($scope.secondStageMatches.thirdFourth, function(match, title){
+            if(match[0].score === null ||  match[1].score === null) valid = false;
+          })
+
+          _.each($scope.secondStageMatches.final, function(match, title){
+            if(match[0].score === null ||  match[1].score === null) valid = false;
+          })
+
+          return valid;
+        }
+
 
         $scope.$watch("groupsMatches.A.matches ", function(newVal){
             calculateStandings();
