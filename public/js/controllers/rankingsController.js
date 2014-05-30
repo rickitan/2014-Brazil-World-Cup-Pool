@@ -1,8 +1,7 @@
 var  app = angular.module('quinielaApp');
 
 app.controller('rankingsController', function ($scope, Rankings, $http) {
-  $scope.user = window.user;
-  console.log(user);
+  if(window.user) $scope.user = window.user;
 
   function getRankings(){
     $scope.users = Rankings.query();
