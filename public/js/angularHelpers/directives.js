@@ -19,3 +19,18 @@ app
       }
     };
   });
+
+app
+    .directive('maPopOver', function () {
+      return {
+        restrict: 'A',
+        link: function (scope, el, attrs) {
+          $(el).popover({
+            trigger: 'hover',
+            html: true,
+            content: attrs.popoverHtml,
+            placement: attrs.popoverPlacement
+          });
+        }
+      };
+    });

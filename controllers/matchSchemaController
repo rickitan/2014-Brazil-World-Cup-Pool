@@ -62,6 +62,7 @@ exports.calculateRankingGroupPhase = function(req, res){
     function(adminSchema, userSchemas, callback){
       _.each(userSchemas, function(userSchema){
         var points = calculatePoints(adminSchema, userSchema, false);
+        if(!userSchema.user) return;
         userSchema.user.points = points;
         userSchema.user.save(function(err){if(err) callback(err, null)});
 

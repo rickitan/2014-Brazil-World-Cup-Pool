@@ -34,11 +34,14 @@ block content
                                 td
                                     img(ng-src='/img/country_flags/{{standing[0].country}}.png', width='auto', height='18', ng-show="standing[0].country")
                                     | {{standing[0].country}}
+                                    span.ng-cloak(style="width:100%; height:100%; color:red",ng-if="!standing[0].country", ma-pop-over, popover-html="Dos o más equipos empatados en todos los criterios, se desempataría por sorteo. Modificar algún resultado.", popover-placement="top") Parate aquí
                                 td
                                     img(ng-src='/img/country_flags/{{standing[1].country}}.png', width='auto', height='18', ng-show="standing[1].country")
                                     | {{standing[1].country}}
+                                    span.ng-cloak(style="width:100%; height:100%; color:red",ng-if="!standing[1].country", ma-pop-over, popover-html="Dos o más equipos empatados en todos los criterios, se desempataría por sorteo. Modificar algún resultado.", popover-placement="top") Parate aquí
 
-        // SECOND PHASE
+
+    // SECOND PHASE
         div.row
             .col-xs-12(style="overflow-y:hidden; overflow-x:scroll; -webkit-overflow-scrolling: touch")
                 div(style='position: relative; margin-top:20px; height: 570px; width:1140px;')
@@ -88,7 +91,7 @@ block content
                     div(style='top: 250px; right:0px; width:450px; height:50px; border:1px solid grey; position:absolute; z-index:1; background-color:white')
                         div(ng-show='secondStageMatches.final.ABCDEFGH[1].country')
                             div(style='width:20px; height:21px; position: absolute; margin-left: 2px; margin-top: 12px; display: inline-block')
-                                input(ng-show='(secondStageMatches.final.ABCDEFGH[0].score == secondStageMatches.final.ABCDEFGH[1].score) && (secondStageMatches.final.ABCDEFGH[0].score != null && secondStageMatches.final.ABCDEFGH[1].score != null  )', type='radio',ng-checked="secondStageMatches.final.ABCDEFGH[1].victorByPenalties", name='final', ng-clicked='victorByPenalties("final", "ABCDEFGH", 1)')
+                                input(ng-show='(secondStageMatches.final.ABCDEFGH[0].score == secondStageMatches.final.ABCDEFGH[1].score) && (secondStageMatches.final.ABCDEFGH[0].score != null && secondStageMatches.final.ABCDEFGH[1].score != null  )', type='radio',ng-checked="secondStageMatches.final.ABCDEFGH[1].victorByPenalties", name='final', ng-click='victorByPenalties("final", "ABCDEFGH", 1)')
                             img(ng-src='/img/country_flags/{{secondStageMatches.final.ABCDEFGH[1].country}}.png', width='50', height='43', style=' margin-left:11px; margin-top:10px')
                             input(type='number', style='width:20px; height:21px; position: absolute; margin-left: -3px; margin-top: 13px', ng-model='secondStageMatches.final.ABCDEFGH[1].score')
 

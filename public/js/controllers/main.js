@@ -402,7 +402,6 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
             _.each($scope.secondStageMatches[round][title], function(country, index){
                 country.victorByPenalties = (winnerIndex == index) ? true : false;
             })
-            //console.log($scope.secondStageMatches[round][title]);
         }
 
     });
