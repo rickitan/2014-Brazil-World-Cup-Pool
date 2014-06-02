@@ -21,7 +21,7 @@ block content
                             input(type='number', ng-model='match[1].score', style="width:28px; font-size:11px")
 
                 //Tabla de posiciones
-                .col-sm-4(ng-if="agrupation.length ==2 && $index==0", style="height:259px")
+                .col-sm-4(ng-if="agrupation.length ==2 && $index==0", style="height:259px; z-index:1")
                     table.table.table-bordered.table-hover.table-condensed
                         thead
                             tr(style="line-height: 25px;min-height: 25px;height: 25px;")
@@ -34,11 +34,11 @@ block content
                                 td
                                     img(ng-src='/img/country_flags/{{standing[0].country}}.png', width='auto', height='18', ng-show="standing[0].country")
                                     | {{standing[0].country}}
-                                    span.ng-cloak(style="width:100%; height:100%; color:red",ng-if="!standing[0].country", ma-pop-over, popover-html="Dos o más equipos empatados en todos los criterios, se desempataría por sorteo. Modificar algún resultado.", popover-placement="top") Parate aquí
+                                    span.ng-cloak(style="width:100%; height:100%; color:red; font-size:13px",ng-if="!standing[0].country", ma-pop-over, popover-html="Dos o más equipos empatados en todos los criterios, se desempataría por sorteo. Modificar algún resultado.", popover-placement="top") Parate aquí
                                 td
                                     img(ng-src='/img/country_flags/{{standing[1].country}}.png', width='auto', height='18', ng-show="standing[1].country")
                                     | {{standing[1].country}}
-                                    span.ng-cloak(style="width:100%; height:100%; color:red",ng-if="!standing[1].country", ma-pop-over, popover-html="Dos o más equipos empatados en todos los criterios, se desempataría por sorteo. Modificar algún resultado.", popover-placement="top") Parate aquí
+                                    span.ng-cloak(style="width:100%; height:100%; color:red; font-size:13px",ng-if="!standing[1].country", ma-pop-over, popover-html="Dos o más equipos empatados en todos los criterios, se desempataría por sorteo. Modificar algún resultado.", popover-placement="top") Parate aquí
 
 
         // SECOND PHASE
