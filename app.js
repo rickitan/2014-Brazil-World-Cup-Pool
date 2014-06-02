@@ -128,7 +128,7 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
  */
 
 app.get("/quiniela", quinielaController.index);
-app.get("/reglas", function(req, res){
+app.get("/rules", function(req, res){
   res.render('rules', {
     title: 'Reglas'
   });
