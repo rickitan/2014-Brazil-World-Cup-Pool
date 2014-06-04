@@ -378,7 +378,8 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
         }, true);
 
 
-        /*$scope.$watch("secondStageMatches.final", function(){ //Calculate who passes to quarter finals
+        $scope.champion = ""
+        $scope.$watch("secondStageMatches.final", function(){ //Calculate who passes to quarter finals
           var matchHolder = [];
           _.each($scope.secondStageMatches.final, function(match, title){
             if(match[0].score === "" && match[1].score === ""){
@@ -392,11 +393,13 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
             }
 
             if(matchHolder.length === 1){
-              $scope.secondStageMatches.champion.champion[0]["country"] = matchHolder[0]["country"];
+              $scope.champion = matchHolder[0]["country"];
               matchHolder = [];
+            }else{
+              $scope.champion = "";
             }
           })
-        }, true);*/
+        }, true);
 
         $scope.victorByPenalties = function(round, title, winnerIndex){
             _.each($scope.secondStageMatches[round][title], function(country, index){
