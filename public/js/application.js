@@ -13,6 +13,7 @@
 //= require lib/bootstrap.min
 //= require lib/angular/angular
 //= require lib/angular-resource/angular-resource
+//= require main
 //= require angularHelpers/services
 //= require angularHelpers/directives
 //= require lib/underscore/underscore

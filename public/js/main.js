@@ -5,6 +5,4 @@
 ga('create', 'UA-51652989-1', 'mundialbrasil.herokuapp.com');
 ga('send', 'pageview');
 
-$(document).ready(function() {
 
-});
