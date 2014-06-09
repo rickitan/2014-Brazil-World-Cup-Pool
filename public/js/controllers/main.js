@@ -10,7 +10,16 @@ var  app = angular.module('quinielaApp');
 });*/
 
 
-app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchema, $filter) {
+app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchema, $filter, $window ) {
+
+        if($window.location.search){ //The user is visting a different quiniela. Ex: ?user_id=fahfi1245
+            var query = $window.location.search.replace("?","");
+            query = query.split("=");
+            var visitingUserId = query[1];
+            window.user = {id:visitingUserId, admin:false, canSave:false};
+        }
+
+
         $scope.user = window.user;
         $scope.groupsMatches = CleanGroupSchema.groupsMatches;
         $scope.secondStageMatches = CleanGroupSchema.secondStageMatches;
@@ -20,6 +29,9 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
                     $scope.groupsMatches = schema.groupPhase;
                     $scope.secondStageMatches = schema.secondStageMatches
                 }
+
+                if(!$scope.user.canSave) setTimeout(function(){jQuery("input").prop('disabled', true)}, 150); //jQuery code shouldn't be here, doing it for quickness. TODO: create directive
+
             });
         }
 
