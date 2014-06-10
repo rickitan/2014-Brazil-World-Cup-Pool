@@ -1,6 +1,6 @@
 module.exports = {
   db: process.env.MONGODB|| 'mongodb://rickitan:quiniela@dbh83.mongolab.com:27837/quiniela', //'mongodb://localhost:27017/test',
-
+  //To back up run: mongodump -h dbh83.mongolab.com:27837 -d quiniela -u rickitan -p quiniela -o /Users/ricardomacario/Desktop/quinielaDBBackup
   sessionSecret: process.env.SESSION_SECRET || 'Your Session Secret goes here',
 
   localAuth: true,
