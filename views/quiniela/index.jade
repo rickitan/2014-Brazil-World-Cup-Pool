@@ -6,7 +6,7 @@ block content
             div Debes registrarte y hacer login para poder guadar tu quiniela. De no hacerlo se borrará lo que hagas.
 
     div(ng-controller="MainCtrl")
-        h1 Quiniela de {{schemaOwner}}
+        h3 Quiniela {{schemaOwner ? 'de '+ schemaOwner : ''}}
 
         .row(style='text-align: right', ng-show="user.canSave || user.admin")
             button.btn.btn-warning(ng-click="saveMatchSchema()") Guardar
