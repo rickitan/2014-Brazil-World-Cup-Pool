@@ -25,7 +25,9 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
         $scope.secondStageMatches = CleanGroupSchema.secondStageMatches;
         if(window.user){
             MatchSchema.get({id: window.user.id}, function(schema){
-                if(schema.groupPhase && schema.secondStageMatches){
+              console.log("SCHEMAAAA", schema);
+              $scope.schemaOwner = schema.user.email;
+              if(schema.groupPhase && schema.secondStageMatches){
                     $scope.groupsMatches = schema.groupPhase;
                     $scope.secondStageMatches = schema.secondStageMatches
                 }
