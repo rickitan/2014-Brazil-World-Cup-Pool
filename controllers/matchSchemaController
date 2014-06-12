@@ -10,6 +10,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 
 
 exports.save = function(req, res){
+    if(!req.user.admin) res.status(404).send("No puedes actualizar ya tramposo");
     var objId = new ObjectId(req.params.user_id);
     console.log(objId);
 
@@ -34,10 +35,19 @@ exports.save = function(req, res){
 
 exports.userMatchSchema = function(req, res){
     var objId = new ObjectId(req.params.user_id);
+
+  MatchSchema.findOne({user: objId})
+    .populate('user')
+    .exec(function(err, schema){
+      if(err) res.status(404).send("Fallo");
+      return res.send(schema);
+    }
+  )
+  /*
     MatchSchema.findOne({user: objId}, function(err, schema){
         if(err) res.status(404).send("Fallo");
         return res.send(schema);
-    });
+    }); */
 }
 
 
@@ -116,8 +126,8 @@ function calculatePoints(adminSchema, userSchema, calculateSecondStage){
   var CORRECT_WINNER_OR_DRAW = 3;
   var COUNTRY_IN_PHASE = 1;
   var COUNTRY_IN_CORRECT_POSITION = 2;
-  var CORRECT_CHAMPION = 10;
-  var CORRECT_THIRD = 3;
+  var CORRECT_CHAMPION = 20;
+  var CORRECT_THIRD = 10;
 
   var adminGroupPhase = adminSchema.groupPhase;
   var userGroupPhase = userSchema.groupPhase;

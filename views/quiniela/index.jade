@@ -6,9 +6,9 @@ block content
             div Debes registrarte y hacer login para poder guadar tu quiniela. De no hacerlo se borrará lo que hagas.
 
     div(ng-controller="MainCtrl")
-        h1 Quiniela
+        h1 Quiniela de {{schemaOwner}}
 
-        .row(style='text-align: right', ng-show="user")
+        .row(style='text-align: right', ng-show="user.canSave || user.admin")
             button.btn.btn-warning(ng-click="saveMatchSchema()") Guardar
 
         div.row(ng-repeat="agrupation in groupsLayout")
@@ -123,7 +123,7 @@ block content
                                 div(style='width:20px; height:21px; position: absolute; margin-left: -3px; margin-top: 12px; display: inline-block')
                                     input(ng-show='(secondStageMatches.thirdFourth.ABCDEFGH[0].score == secondStageMatches.thirdFourth.ABCDEFGH[1].score) && (secondStageMatches.thirdFourth.ABCDEFGH[0].score !== null && secondStageMatches.thirdFourth.ABCDEFGH[1].score !== null) && secondStageMatches.thirdFourth.ABCDEFGH[1].country', type='radio',ng-checked="secondStageMatches.thirdFourth.ABCDEFGH[1].victorByPenalties", name='thirdFourth', ng-click='victorByPenalties("thirdFourth", "ABCDEFGH", 1)')
 
-        .row(style='text-align: right', ng-show="user")
+        .row(style='text-align: right', ng-show="user.canSave || user.admin")
             button.btn.btn-warning(ng-click="saveMatchSchema()") Guardar
 
 

@@ -10,7 +10,8 @@ block content
             tbody
                 tr(ng-repeat="user in users")
                     td {{$index}}
-                    td {{user.email}}
+                    td
+                        a(ng-href="/quiniela?user_id={{user._id}}") {{user.email}}
                     td {{user.points}}
 
         div.row(ng-show="user.admin")
