@@ -32,7 +32,7 @@ app.controller('MainCtrl', function ($scope, MatchSchema, $http, CleanGroupSchem
                     $scope.secondStageMatches = schema.secondStageMatches
                 }
 
-                if(!$scope.user.canSave) setTimeout(function(){jQuery("input").prop('disabled', true)}, 150); //jQuery code shouldn't be here, doing it for quickness. TODO: create directive
+                if(!$scope.user.canSave && !$scope.user.admin) setTimeout(function(){jQuery("input").prop('disabled', true)}, 150); //jQuery code shouldn't be here, doing it for quickness. TODO: create directive
 
             });
         }

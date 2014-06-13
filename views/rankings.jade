@@ -9,7 +9,7 @@ block content
                     th.col-xs-5 Points
             tbody
                 tr(ng-repeat="user in users")
-                    td {{$index}}
+                    td {{$index + 1}}
                     td
                         a(ng-href="/quiniela?user_id={{user._id}}") {{user.email}}
                     td {{user.points}}
