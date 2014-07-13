@@ -183,6 +183,9 @@ function calculatePoints(adminSchema, userSchema, calculateSecondStage){
   function correctChampionWin(realMatch, userMatch){
     var championHolder = "";
     var userChampionHolder = "";
+
+    if(realMatch[0].country === null || realMatch[1].country === null || realMatch[0].score === null || realMatch[1].score === null ) return false;
+
     if(realMatch[0].score > realMatch[1].score){
       championHolder = realMatch[0].country
     }else if(realMatch[0].score < realMatch[1].score){
@@ -201,7 +204,7 @@ function calculatePoints(adminSchema, userSchema, calculateSecondStage){
       else if(userMatch[1].victorByPenalties) userChampionHolder = userMatch[1].country;
     }
 
-    if( (championHolder != "" && userChampionHolder != "") && (championHolder === userChampionHolder)) return true;
+    if( (championHolder != null && userChampionHolder != null) && (championHolder === userChampionHolder)) return true;
     else return false;
   }
 
