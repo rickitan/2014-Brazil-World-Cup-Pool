@@ -18,14 +18,12 @@
         li(class=title=='Rankings'?'active':undefined)
           a(href='/rankings') Rankings
 
-        //li(class=title=='Contact'?'active':undefined)
-          a(href='/contact') Contact
       ul.nav.navbar-nav.navbar-right
         if !user
           li(class=title=='Login'?'active':undefined)
             a(href='/login') Login
           if secrets.localAuth
-            //li(class=title=='Create Account'?'active':undefined)
+            li(class=title=='Create Account'?'active':undefined)
               a(href='/signup') Registrarse
         else
           script.
